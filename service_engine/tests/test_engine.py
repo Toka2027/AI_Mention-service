@@ -8,7 +8,7 @@ from pathlib import Path
 
 import pytest
 
-from engine import extractor, generator, main, pages, report
+from engine import extractor, generator, main, pages, report, verify
 from engine.models import PACKAGES, RECOMMENDED_INTAKE, ClientInput, Question, ResponseRow
 
 
@@ -250,3 +250,76 @@ def test_run_multi_order_isolation_and_unique_zip(tmp_path: Path):
     # Re-running ORD-A must not delete ORD-B.
     main.run(str(inp), str(resp), str(out), order_id="ORD-A")
     assert d2.exists() and z2.exists()
+
+
+# --- QA gate (verify) -------------------------------------------------------
+
+def _write_acme_full(tmp_path: Path) -> Path:
+    """Acme input with full recommended intake (so intake completeness passes)."""
+    data = {
+        "order_id": "ord-x", "brand": "Acme Co", "brand_variations": ["Acme", "ACME"],
+        "website": "https://acme.example", "niche": "widget services", "country": "US",
+        "language": "English", "keywords": ["blue widgets", "red widgets", "green widgets"],
+        "package": "BASIC", "competitors_known": ["WidgetCo"], "target_urls": ["https://acme.example"],
+        "preferred_positioning": "Reliable widgets", "services_to_highlight": ["blue widgets"],
+        "topics_to_avoid": ["ranking guarantees"], "compliance_notes": "Factual only.",
+        "delivery_contact": "ops@acme.example",
+    }
+    p = tmp_path / "acme_full.json"
+    p.write_text(json.dumps(data), encoding="utf-8")
+    return p
+
+
+def _write_acme_all_captured(tmp_path: Path, inp: Path) -> Path:
+    ci = ClientInput.from_json(str(inp))
+    qs = generator.generate_questions(ci, ci.pkg.n_questions)
+    rows = generator.build_capture_template(qs, ci.pkg.models)
+    for r in rows:  # capture every model answer so no screenshots are pending
+        r.answer = f"Acme Co is one widget provider (answer for q{r.question_id})."
+        r.competitors = ["WidgetCo"]
+    p = tmp_path / "acme_all_responses.csv"
+    report.write_capture_template(rows, qs, p)
+    return p
+
+
+def test_verify_passes_on_complete_order(tmp_path: Path):
+    inp = _write_acme_full(tmp_path)
+    resp = _write_acme_all_captured(tmp_path, inp)
+    out = tmp_path / "outputs"
+    main.run(str(inp), str(resp), str(out), order_id="ord-x")
+    res = verify.verify_order(str(out), "Acme Co", "ord-x")
+    assert verify.FAIL not in [c["status"] for c in res["checks"]]
+    assert res["overall"] == verify.PASS  # full intake + all answers captured
+
+
+def test_verify_fails_on_missing_report(tmp_path: Path):
+    inp = _write_acme_full(tmp_path)
+    resp = _write_acme_all_captured(tmp_path, inp)
+    out = tmp_path / "outputs"
+    d = main.run(str(inp), str(resp), str(out), order_id="ord-x")
+    (d / "report.pdf").unlink()
+    res = verify.verify_order(str(out), "Acme Co", "ord-x")
+    assert res["overall"] == verify.FAIL
+    assert any(c["name"] == "file: report.pdf" and c["status"] == verify.FAIL for c in res["checks"])
+
+
+def test_verify_flags_banned_promise(tmp_path: Path):
+    inp = _write_acme_full(tmp_path)
+    resp = _write_acme_all_captured(tmp_path, inp)
+    out = tmp_path / "outputs"
+    d = main.run(str(inp), str(resp), str(out), order_id="ord-x")
+    page = next((d / "pages").glob("*.html"))
+    page.write_text(page.read_text(encoding="utf-8") + "\n<p>We guarantee AI mentions and rankings.</p>",
+                    encoding="utf-8")
+    res = verify.verify_order(str(out), "Acme Co", "ord-x")
+    safe = next(c for c in res["checks"] if c["name"].startswith("client-safe"))
+    assert safe["status"] == verify.FAIL
+
+
+def test_scan_banned_allows_disclaimer_flags_promise(tmp_path: Path):
+    (tmp_path / "ok.md").write_text(
+        "This service does not promise or guarantee AI mentions, indexing, or model influence.",
+        encoding="utf-8")
+    assert verify._scan_banned(tmp_path) == []
+    (tmp_path / "bad.md").write_text("We guarantee AI rankings for your brand.", encoding="utf-8")
+    assert len(verify._scan_banned(tmp_path)) == 1

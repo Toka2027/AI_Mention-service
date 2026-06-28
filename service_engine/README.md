@@ -71,6 +71,14 @@ JSON, else `order-001` (with a warning). Output goes to **`outputs/<client-slug>
 ZIP to **`outputs/<client-slug>/<order-id>_deliverable.zip`** — re-running one order never overwrites
 another. See [Multi-order & operations](#multi-order--operations).
 
+## QA gate (run before delivering any order)
+
+```bash
+python -m engine.main verify --client-slug 1billionlinks --order-id 2026-06-28-001 --out outputs
+# add --strict-screenshots to require all manual full-page screenshots before delivery
+```
+Exit code 1 = at least one `[FAIL]` → do not deliver. See [docs/QA_GATE.md](docs/QA_GATE.md).
+
 ## Test
 
 ```bash
@@ -136,10 +144,15 @@ Each order is fully isolated under `outputs/<client-slug>/<order-id>/` with its 
 clients/orders never overwrite or mix. Operational docs:
 
 - [docs/CLIENT_REQUIREMENTS.md](docs/CLIENT_REQUIREMENTS.md) — what to collect from the client.
+- [docs/SEOESTORE_INTAKE_FORM.md](docs/SEOESTORE_INTAKE_FORM.md) — customer-facing order-form structure.
 - [docs/OPERATOR_CHECKLIST.md](docs/OPERATOR_CHECKLIST.md) — step-by-step delivery SOP.
 - [docs/SCREENSHOT_GUIDE.md](docs/SCREENSHOT_GUIDE.md) — full-page screenshot rules + fallback.
+- [docs/QA_GATE.md](docs/QA_GATE.md) — automated + manual pre-delivery QA gate.
+- [docs/HOSTING_WORKFLOW.md](docs/HOSTING_WORKFLOW.md) — where to host the support pages (+ recommendation).
+- [docs/ALL_MODEL_PILOT.md](docs/ALL_MODEL_PILOT.md) — capture status + steps for the 4-model pilot.
 - [docs/CLIENT_SAFE_NOTES.md](docs/CLIENT_SAFE_NOTES.md) — approved positioning / banned wording.
 - [docs/READINESS_ASSESSMENT.md](docs/READINESS_ASSESSMENT.md) — readiness score + gaps + next steps.
+- [docs/samples/](docs/samples/) — sanitized, sales-safe sample report (`1billionlinks_sample_report.pdf`).
 
 ---
 
