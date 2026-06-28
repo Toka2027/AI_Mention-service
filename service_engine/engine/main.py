@@ -69,7 +69,7 @@ def run(input_path: str, responses_path: str | None, out_root: str) -> Path:
     report.write_tables(master, src_freq, comp_freq, out_dir)
     print(f"STEP 4  master_table.csv ({len(master)} rows) + frequency tables")
 
-    # --- STEP 5: indexing pages --------------------------------------------
+    # --- STEP 5: crawlable support pages -----------------------------------
     page_questions = pages.select_questions_for_pages(questions, pkg.n_pages)
     sibling = [(pages.page_slug(q, ci), f"Q{q.id}: {q.keyword}") for q in page_questions]
     pages_dir = out_dir / "pages"
@@ -81,12 +81,12 @@ def run(input_path: str, responses_path: str | None, out_root: str) -> Path:
         slug = pages.page_slug(q, ci)
         (pages_dir / f"{slug}.html").write_text(html, encoding="utf-8")
         pages_urls.append(f"{ci.website.rstrip('/')}/{slug}.html")
-    print(f"STEP 5  built {len(page_questions)} indexing pages (schema={pkg.schema}) -> pages/")
+    print(f"STEP 5  built {len(page_questions)} crawlable support pages (schema={pkg.schema}) -> pages/")
 
-    # --- STEP 6: sitemap ----------------------------------------------------
+    # --- STEP 6: sitemap (publish & make crawlable) ------------------------
     (out_dir / "sitemap.xml").write_text(pages.render_sitemap(pages_urls), encoding="utf-8")
     report.write_links(master, pages_urls, out_dir)
-    print("STEP 6  sitemap.xml + indexing_urls.txt + source_links.csv")
+    print("STEP 6  sitemap.xml + support_page_urls.txt + source_links.csv")
 
     # --- STEP 7: deliverables (only with real captures) --------------------
     if has_responses:
@@ -116,7 +116,7 @@ def run(input_path: str, responses_path: str | None, out_root: str) -> Path:
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="engine",
-        description="AI Mention - LLM Query Seeding engine.",
+        description="AI Mention - AI visibility baseline & LLM query testing engine.",
     )
     sub = parser.add_subparsers(dest="command", required=True)
     run_p = sub.add_parser("run", help="Run the service for one client input.")

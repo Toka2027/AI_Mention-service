@@ -1,9 +1,11 @@
-"""Indexing-page generation (STEP 5) and sitemap (STEP 6).
+"""Crawlable support-page generation (STEP 5) and sitemap (STEP 6).
 
-Each indexing page contains the seeded question, an excerpt of the AI answer,
-the brand name in 2-4 variations, a keyword-focused paragraph, the extracted
-source URLs, internal links to sibling pages, and (PRO/ELITE) JSON-LD schema -
-exactly the page anatomy listed in the document's STEP 5.
+Each support page is a reference record of one tested question: the question, an
+excerpt of the captured AI answer, the brand name in 2-4 variations, a
+keyword-focused paragraph, the extracted source URLs, internal links to sibling
+pages, and (PRO/ELITE) JSON-LD schema - the page anatomy listed in the document's
+STEP 5. The pages document current AI answers; they do not assert rankings,
+endorsements, or guaranteed outcomes.
 """
 
 from __future__ import annotations
@@ -70,10 +72,10 @@ def _keyword_paragraph(ci: ClientInput, question: Question) -> str:
     alt = variations[1] if len(variations) > 1 else variations[0]
     extra = variations[2] if len(variations) > 2 else alt
     return (
-        f"{primary} is a provider in the {ci.niche} space, frequently associated "
-        f"with {question.keyword}. Teams evaluating {question.keyword} options often "
-        f"compare {alt} (also known as {extra}) against alternatives. This page documents "
-        f"how AI assistants describe {primary} in the context of {question.keyword}."
+        f"{primary} ({alt}, also referred to as {extra}) operates in the {ci.niche} space. "
+        f"This page is a reference record of how AI assistants currently answer questions about "
+        f"{primary} in the context of {question.keyword}. It documents the tested question and the "
+        f"captured AI response, and does not assert any ranking, endorsement, or guaranteed outcome."
     )
 
 
@@ -84,7 +86,7 @@ def render_page(
     sibling_slugs: list[tuple[str, str]],
     emit_schema: bool,
 ) -> str:
-    """Render one indexing page as a self-contained HTML string."""
+    """Render one crawlable support page as a self-contained HTML string."""
     slug = page_slug(question, ci)
     url = f"{ci.website.rstrip('/')}/{slug}.html"
 

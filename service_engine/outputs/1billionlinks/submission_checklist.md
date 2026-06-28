@@ -1,14 +1,16 @@
-# Submission & Indexing Checklist - 1BillionLinks
+# Publication & Crawl Checklist - 1BillionLinks
 
-STEP 6 (Fast Indexing) is performed manually. Confirm each item:
+STEP 6 (publish the support pages and make them crawlable) is performed manually.
+These steps help search engines and AI crawlers discover the pages; they do not
+guarantee indexing, rankings, or AI mentions. Confirm each item:
 
-- [ ] Host the indexing pages from `pages/` on the brand site or a controlled domain.
-- [ ] Publish `sitemap.xml` and submit it (e.g. Google/Bing webmaster tools).
-- [ ] Ping / request crawl for the new URLs.
+- [ ] Host the crawlable support pages from `pages/` on the brand site or a controlled domain.
+- [ ] Publish `sitemap.xml` so the pages can be discovered and crawled.
+- [ ] Add internal links / request a crawl for the new URLs.
 - [ ] Verify internal links resolve between the published pages.
-- [ ] Record the live URLs and the submission confirmation below.
+- [ ] Record the live URLs and the publication confirmation below.
 
-## Created indexing URLs
+## Created support-page URLs
 - https://1billionlinks.com/1billionlinks-seo-link-building-q1.html
 - https://1billionlinks.com/1billionlinks-backlinks-q2.html
 - https://1billionlinks.com/1billionlinks-press-release-distribution-q3.html
@@ -22,7 +24,7 @@ STEP 6 (Fast Indexing) is performed manually. Confirm each item:
 - https://1billionlinks.com/1billionlinks-backlinks-q11.html
 - https://1billionlinks.com/1billionlinks-press-release-distribution-q12.html
 
-## Submission confirmation (fill in)
-- Submitted by: ______________________   Date: ____________
-- Sitemap submitted to: ______________________
-- Indexing/crawl request status: ______________________
+## Publication confirmation (fill in)
+- Published by: ______________________   Date: ____________
+- Sitemap published at: ______________________
+- Crawl request status: ______________________

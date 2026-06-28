@@ -14,7 +14,7 @@ from pathlib import Path
 
 # --- Packages (from the document's "Packages & Pricing" section) -------------
 # Each tier fixes: how many questions are generated (STEP 2), which LLMs are in
-# scope (STEP 3), how many indexing pages are built (STEP 5), and whether
+# scope (STEP 3), how many crawlable support pages are built (STEP 5), and whether
 # schema markup is emitted (introduced at PRO in the document).
 
 @dataclass(frozen=True)

@@ -7,60 +7,56 @@
       "bytes": 225
     },
     {
-      "path": "indexing_urls.txt",
-      "bytes": 827
-    },
-    {
       "path": "master_table.csv",
       "bytes": 33343
     },
     {
       "path": "pages/1billionlinks-backlinks-q11.html",
-      "bytes": 4398
+      "bytes": 4462
     },
     {
       "path": "pages/1billionlinks-backlinks-q2.html",
-      "bytes": 4577
+      "bytes": 4641
     },
     {
       "path": "pages/1billionlinks-backlinks-q7.html",
-      "bytes": 4439
+      "bytes": 4503
     },
     {
       "path": "pages/1billionlinks-domain-authority-q4.html",
-      "bytes": 4737
+      "bytes": 4787
     },
     {
       "path": "pages/1billionlinks-domain-authority-q9.html",
-      "bytes": 4516
+      "bytes": 4566
     },
     {
       "path": "pages/1billionlinks-press-release-distribution-q12.html",
-      "bytes": 4536
+      "bytes": 4566
     },
     {
       "path": "pages/1billionlinks-press-release-distribution-q3.html",
-      "bytes": 4745
+      "bytes": 4775
     },
     {
       "path": "pages/1billionlinks-press-release-distribution-q8.html",
-      "bytes": 4592
+      "bytes": 4622
     },
     {
       "path": "pages/1billionlinks-seo-link-building-q1.html",
-      "bytes": 4974
+      "bytes": 5022
     },
     {
       "path": "pages/1billionlinks-seo-link-building-q10.html",
-      "bytes": 4568
+      "bytes": 4616
     },
     {
       "path": "pages/1billionlinks-seo-link-building-q6.html",
-      "bytes": 4638
+      "bytes": 4686
     },
     {
       "path": "pages/1billionlinks-tier-2-and-tier-3-backlink-campaigns-q5.html",
-      "bytes": 4870
+      "bytes": 4880
     },
     {
       "path": "query_plan.md",
@@ -76,7 +72,7 @@
     },
     {
       "path": "report.pdf",
-      "bytes": 3456
+      "bytes": 4168
     },
     {
       "path": "responses_template.csv",
@@ -200,7 +196,11 @@
     },
     {
       "path": "submission_checklist.md",
-      "bytes": 1551
+      "bytes": 1729
+    },
+    {
+      "path": "support_page_urls.txt",
+      "bytes": 827
     }
   ]
 }

@@ -96,8 +96,8 @@ def write_tables(
 
 
 def write_links(master_table: list[dict], pages_urls: list[str], out_dir: Path) -> None:
-    """The 'links' deliverable: created indexing URLs + extracted source links."""
-    (out_dir / "indexing_urls.txt").write_text("\n".join(pages_urls) + "\n", encoding="utf-8")
+    """The 'links' deliverable: created support-page URLs + extracted source links."""
+    (out_dir / "support_page_urls.txt").write_text("\n".join(pages_urls) + "\n", encoding="utf-8")
     # Source links extracted from the captured answers.
     links: "OrderedDict[str, int]" = OrderedDict()
     for row in master_table:
@@ -145,18 +145,18 @@ def _recommendations(stats: dict, comp_freq: "OrderedDict[str, int]") -> list[st
         if stats["n_brand_hits"] == 0:
             recs.append(
                 "The brand did not appear in any captured answer. This is the expected baseline "
-                "for a new brand and is exactly the gap this service closes - keep seeding and "
-                "re-measure on the next cycle."
+                "for a new brand and is exactly the visibility gap this review surfaces - keep "
+                "testing and re-measure on the next cycle."
             )
         elif rate < 0.34:
             recs.append(
                 f"The brand appeared in {stats['n_brand_hits']} of {stats['n_captured']} captured "
-                "answers. Prioritise the question categories where it surfaced and repeat them across cycles."
+                "answers. Note the question categories where it surfaced and re-test them across cycles."
             )
         else:
             recs.append(
-                f"Strong early signal: brand appeared in {stats['n_brand_hits']} of "
-                f"{stats['n_captured']} captured answers. Reinforce with more indexing pages on the winning keywords."
+                f"Strong early result: the brand appeared in {stats['n_brand_hits']} of "
+                f"{stats['n_captured']} captured answers. Add more crawlable support pages on the keywords where it surfaced."
             )
     if stats["models_pending"]:
         recs.append(
@@ -171,8 +171,8 @@ def _recommendations(stats: dict, comp_freq: "OrderedDict[str, int]") -> list[st
             + ") to position the brand directly against them."
         )
     recs.append(
-        "Re-run the seeding cycle periodically; the document notes this is a slow but strong "
-        "medium-term effect on how LLMs associate the brand with its keywords."
+        "Re-test periodically to track how AI tools' understanding of the brand changes over time. "
+        "This is an observational baseline; it does not influence, train, or guarantee AI answers."
     )
     return recs
 
@@ -221,7 +221,8 @@ def render_pdf_report(
         _mc("- " + t, 6, wrapmode="CHAR")
 
     # Cover
-    h1("AI Mention - LLM Query Seeding")
+    h1("AI Mention - AI Visibility Baseline Report")
+    body("AI visibility baseline, LLM query testing & brand/entity association review.")
     body(f"Client report for: {ci.brand}")
     body(f"Website: {ci.website}")
     body(f"Package: {ci.package} (${ci.pkg.price_usd})")
@@ -230,13 +231,13 @@ def render_pdf_report(
 
     # Summary
     h2("1. Summary")
-    bullet(f"Questions seeded: {stats['n_questions']}")
+    bullet(f"Questions tested: {stats['n_questions']}")
     bullet(f"Models in scope: {', '.join(ci.pkg.models)}")
     bullet(f"Captures collected: {stats['n_captured']} of {stats['n_captures_total']} (questions x models)")
     bullet(f"Models captured: {', '.join(stats['models_captured']) or 'none'}")
     bullet(f"Models pending (manual STEP 3): {', '.join(stats['models_pending']) or 'none'}")
     bullet(f"Brand appearances in captured answers: {stats['n_brand_hits']}")
-    bullet(f"Indexing pages created: {len(pages_urls)}")
+    bullet(f"Crawlable support pages created: {len(pages_urls)}")
 
     # Keywords
     h2("2. Keywords used")
@@ -278,10 +279,16 @@ def render_pdf_report(
     h2("7. Methodology & notes")
     body(
         "Questions are generated from the documented brand-focused templates (brand + keyword + "
-        "niche context). LLM answers are captured manually by the delivery team (STEP 3); for this "
+        "niche context). AI answers are captured manually by the delivery team (STEP 3); for this "
         "report, Claude answers were captured directly. URLs are auto-extracted from answers; "
         "competitors are recorded from the captured answers. Brand appearance is a literal "
         "case-insensitive match of the brand and its variations."
+    )
+    body(
+        "Scope & disclaimer: this is an AI visibility baseline and brand/entity association review. "
+        "It tests and documents how AI tools currently answer brand questions at a point in time. "
+        "It does not inject, train, manipulate, or influence AI models, and it does not promise or "
+        "guarantee AI mentions, search rankings, or indexing."
     )
 
     pdf.output(str(out_path))
@@ -395,23 +402,25 @@ def write_screenshots(
 
 def write_submission_checklist(ci: ClientInput, pages_urls: list[str], out_dir: Path) -> None:
     lines = [
-        f"# Submission & Indexing Checklist - {ci.brand}",
+        f"# Publication & Crawl Checklist - {ci.brand}",
         "",
-        "STEP 6 (Fast Indexing) is performed manually. Confirm each item:",
+        "STEP 6 (publish the support pages and make them crawlable) is performed manually.",
+        "These steps help search engines and AI crawlers discover the pages; they do not",
+        "guarantee indexing, rankings, or AI mentions. Confirm each item:",
         "",
-        "- [ ] Host the indexing pages from `pages/` on the brand site or a controlled domain.",
-        "- [ ] Publish `sitemap.xml` and submit it (e.g. Google/Bing webmaster tools).",
-        "- [ ] Ping / request crawl for the new URLs.",
+        "- [ ] Host the crawlable support pages from `pages/` on the brand site or a controlled domain.",
+        "- [ ] Publish `sitemap.xml` so the pages can be discovered and crawled.",
+        "- [ ] Add internal links / request a crawl for the new URLs.",
         "- [ ] Verify internal links resolve between the published pages.",
-        "- [ ] Record the live URLs and the submission confirmation below.",
+        "- [ ] Record the live URLs and the publication confirmation below.",
         "",
-        "## Created indexing URLs",
+        "## Created support-page URLs",
         *[f"- {u}" for u in pages_urls],
         "",
-        "## Submission confirmation (fill in)",
-        "- Submitted by: ______________________   Date: ____________",
-        "- Sitemap submitted to: ______________________",
-        "- Indexing/crawl request status: ______________________",
+        "## Publication confirmation (fill in)",
+        "- Published by: ______________________   Date: ____________",
+        "- Sitemap published at: ______________________",
+        "- Crawl request status: ______________________",
         "",
     ]
     (out_dir / "submission_checklist.md").write_text("\n".join(lines), encoding="utf-8")

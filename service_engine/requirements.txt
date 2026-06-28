@@ -1,4 +1,4 @@
-# AI Mention – LLM Query Seeding engine
+# AI Mention - AI visibility baseline & LLM query testing engine
 # Runtime deps are deliberately minimal. Everything else uses the Python stdlib
 # (csv, json, xml, shutil, argparse).
 fpdf2>=2.7        # STEP 7: real PDF report deliverable
