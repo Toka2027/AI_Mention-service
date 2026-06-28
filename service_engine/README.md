@@ -81,9 +81,22 @@ Exit code 1 = at least one `[FAIL]` → do not deliver. See [docs/QA_GATE.md](do
 
 ## Test
 
+Tests live in `service_engine/` and import the `engine` package, so they must run with
+`service_engine` on the path. Use any of:
+
 ```bash
-python -m pytest -q
+# from service_engine/ (canonical)
+cd service_engine && python -m pytest -q
+
+# from the repo root (works via the root pytest.ini `pythonpath` setting)
+python -m pytest
+
+# or the Makefile target (from the repo root)
+make test
 ```
+
+Do **not** run `python -m pytest service_engine` from the repo root without the config — it fails on
+`import engine`. The root `pytest.ini` handles the path so plain `python -m pytest` works.
 
 ---
 
