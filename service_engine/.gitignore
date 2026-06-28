@@ -6,8 +6,8 @@ __pycache__/
 .venv/
 venv/
 
-# Regenerable ZIP deliverables (the unzipped output folder is kept in-repo)
-outputs/*_deliverable.zip
+# Regenerable ZIP deliverables (the unzipped order folders are kept in-repo)
+**/*_deliverable.zip
 
 # OS / editor
 .DS_Store

@@ -238,6 +238,10 @@ def render_pdf_report(
     bullet(f"Models pending (manual STEP 3): {', '.join(stats['models_pending']) or 'none'}")
     bullet(f"Brand appearances in captured answers: {stats['n_brand_hits']}")
     bullet(f"Crawlable support pages created: {len(pages_urls)}")
+    bullet(
+        f"Full-page answer proofs generated: {stats['n_captured']}; "
+        f"manual full-page screenshots pending: {stats['n_pending']}"
+    )
 
     # Keywords
     h2("2. Keywords used")
@@ -344,7 +348,8 @@ def render_screenshot(
     draw = ImageDraw.Draw(img)
 
     draw.rectangle([0, 0, W, 70], fill=(20, 30, 60))
-    draw.text((margin, 22), f"AI Mention - {response.model} answer", font=title_font, fill="white")
+    draw.text((margin, 16), f"AI Mention - {response.model} full-page answer proof", font=title_font, fill="white")
+    draw.text((margin, 46), "Generated capture (full question + full answer shown)", font=label_font, fill=(180, 190, 210))
 
     y = 90
     draw.text((margin, y), f"Brand: {ci.brand}   |   Keyword: {question.keyword}", font=label_font, fill=(60, 60, 60))
@@ -366,6 +371,26 @@ def render_screenshot(
     img.save(out_path)
 
 
+SCREENSHOT_RULES = (
+    "FULL-PAGE SCREENSHOT REQUIREMENTS (STEP 3)",
+    "-------------------------------------------",
+    "1. Capture the FULL answer page, not a cropped/partial view. Use the browser's",
+    "   full-page screenshot (e.g. Chrome DevTools 'Capture full size screenshot',",
+    "   Firefox 'Save Full Page', or a full-page capture extension).",
+    "2. Each screenshot MUST show: the question/prompt, the complete answer, and visible",
+    "   model/interface context (model name, tab/title, date if shown).",
+    "3. Save as PNG using the EXACT filename in the table below: q{id}_{model}.png",
+    "   (lower-case model, no spaces). One file per question x model.",
+    "4. Keep text readable: default zoom (100%), light theme preferred, no personal data",
+    "   in view. Redact any account email/avatar if present.",
+    "5. Fallback if a full-page capture is not technically possible on a platform:",
+    "   take 2+ overlapping screenshots covering the whole answer, name them",
+    "   q{id}_{model}_part1.png, q{id}_{model}_part2.png, and note the reason in the",
+    "   capture file's 'behavior_notes' column.",
+    "",
+)
+
+
 def write_screenshots(
     questions: list[Question],
     responses: list[ResponseRow],
@@ -373,29 +398,37 @@ def write_screenshots(
     shots_dir: Path,
     report_date: str = REPORT_DATE,
 ) -> tuple[int, list[str]]:
-    """Render proof PNGs for captured answers; list expected manual captures."""
+    """Render full-page proof PNGs for captured answers; write a manifest listing
+    the full-page screenshots still to be captured manually."""
     shots_dir.mkdir(parents=True, exist_ok=True)
     by_id = {q.id: q for q in questions}
     made = 0
-    expected: list[str] = []
+    pending: list[tuple[str, int, str, str]] = []  # (filename, qid, model, question)
+    captured_files: list[str] = []
     for r in responses:
         q = by_id.get(r.question_id)
         if q is None:
             continue
+        name = r.screenshot_filename or f"q{r.question_id}_{r.model.lower()}.png"
         if r.is_captured:
-            name = r.screenshot_filename or f"q{r.question_id}_{r.model.lower()}.png"
             render_screenshot(q, r, ci, shots_dir / name, report_date)
+            captured_files.append(name)
             made += 1
         else:
-            expected.append(r.screenshot_filename or f"q{r.question_id}_{r.model.lower()}.png")
-    note = [
-        "Screenshots still required from the manual STEP 3 (one PNG per file below).",
-        "Save each capture into this folder using the exact filename:",
-        "",
-        *expected,
-    ]
-    (shots_dir / "EXPECTED_FILES.txt").write_text("\n".join(note) + "\n", encoding="utf-8")
-    return made, expected
+            pending.append((name, r.question_id, r.model, q.text))
+
+    lines: list[str] = list(SCREENSHOT_RULES)
+    lines.append(f"Captured automatically this run (generated full-page proofs): {len(captured_files)}")
+    for f in captured_files:
+        lines.append(f"  [done] {f}")
+    lines.append("")
+    lines.append(f"Manual full-page screenshots still required: {len(pending)}")
+    lines.append("filename | model | question")
+    for (name, qid, model, qtext) in pending:
+        lines.append(f"  [ ] {name} | {model} | Q{qid}: {qtext}")
+    lines.append("")
+    (shots_dir / "EXPECTED_FILES.txt").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    return made, [p[0] for p in pending]
 
 
 # --- checklist, manifest, zip ------------------------------------------------
@@ -426,20 +459,72 @@ def write_submission_checklist(ci: ClientInput, pages_urls: list[str], out_dir: 
     (out_dir / "submission_checklist.md").write_text("\n".join(lines), encoding="utf-8")
 
 
-def write_manifest(out_dir: Path) -> dict:
+def write_order_brief(ci: ClientInput, input_path: str, responses_path: str | None, out_dir: Path) -> None:
+    """An order brief echoing the intake so the operator can verify the right
+    client/order before delivery (guards against mixing client data)."""
+    filled, total, missing = ci.intake_completeness()
+    lines = [
+        f"# Order Brief - {ci.brand}",
+        "",
+        f"- Order ID: {ci.order_id or '(none)'}",
+        f"- Client slug: {ci.client_slug or 'derived from brand'}",
+        f"- Package: {ci.package} (${ci.pkg.price_usd})",
+        f"- Website: {ci.website}",
+        f"- Niche: {ci.niche}",
+        f"- Country / Language: {ci.country or '(missing)'} / {ci.language or '(missing)'}",
+        f"- Delivery contact: {ci.delivery_contact or '(missing)'}",
+        f"- Input file: {input_path}",
+        f"- Responses file: {responses_path or '(none - questions-only run)'}",
+        f"- Intake completeness: {filled}/{total}"
+        + (f" - missing: {', '.join(missing)}" if missing else " - complete"),
+        "",
+        "## Keywords",
+        *[f"- {k}" for k in ci.keywords],
+        "",
+        "## Brand variations",
+        *([f"- {v}" for v in ci.brand_variations] or ["- (none provided)"]),
+        "",
+        "## Positioning & services to highlight",
+        f"- Preferred positioning: {ci.preferred_positioning or '(missing)'}",
+        *([f"- Highlight: {s}" for s in ci.services_to_highlight] or ["- Highlight: (none provided)"]),
+        "",
+        "## Safety constraints (must be respected in all client-facing output)",
+        *([f"- Avoid topic: {t}" for t in ci.topics_to_avoid] or ["- Avoid topic: (none provided)"]),
+        f"- Compliance notes: {ci.compliance_notes or '(none provided)'}",
+        f"- Tone notes: {ci.tone_notes or '(none provided)'}",
+        "",
+        "## Known competitors (client-supplied)",
+        *([f"- {c}" for c in ci.competitors_known] or ["- (none provided)"]),
+        "",
+        "Reminder: this service is an AI visibility baseline / LLM query testing / brand-entity",
+        "association review. It does not promise or guarantee AI mentions, LLM visibility,",
+        "indexing, rankings, model training, or model influence.",
+        "",
+    ]
+    (out_dir / "order_brief.md").write_text("\n".join(lines), encoding="utf-8")
+
+
+def write_manifest(out_dir: Path, order_meta: dict | None = None) -> dict:
     files = []
     for p in sorted(out_dir.rglob("*")):
         if p.is_file() and p.name != "manifest.json":
             files.append(
                 {"path": str(p.relative_to(out_dir)).replace("\\", "/"), "bytes": p.stat().st_size}
             )
-    manifest = {"client_output": out_dir.name, "file_count": len(files), "files": files}
+    manifest = {
+        "order": order_meta or {},
+        "client_output": out_dir.name,
+        "file_count": len(files),
+        "files": files,
+    }
     (out_dir / "manifest.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
     return manifest
 
 
-def assemble_zip(out_dir: Path) -> str:
-    """Zip the deliverable folder next to it (STEP 7 'clean ZIP folder')."""
-    base = out_dir.parent / f"{out_dir.name}_deliverable"
-    archive = shutil.make_archive(str(base), "zip", root_dir=str(out_dir))
+def assemble_zip(out_dir: Path, archive_base: Path) -> str:
+    """Zip the order folder to an explicit base path (no extension). The archive
+    is written OUTSIDE out_dir so each order's ZIP is uniquely named and never
+    overwrites another order's deliverable."""
+    archive_base.parent.mkdir(parents=True, exist_ok=True)
+    archive = shutil.make_archive(str(archive_base), "zip", root_dir=str(out_dir))
     return archive

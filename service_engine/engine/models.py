@@ -57,14 +57,65 @@ PACKAGES: dict[str, Package] = {
 
 # --- Client input (STEP 1) ---------------------------------------------------
 
+# Recommended intake fields (beyond the hard-required core). Missing ones do not
+# block a run; they lower the "intake completeness" score and raise a warning so
+# the operator knows what to chase before delivery. See docs/CLIENT_REQUIREMENTS.md.
+RECOMMENDED_INTAKE = (
+    "country",
+    "language",
+    "brand_variations",
+    "competitors_known",
+    "target_urls",
+    "preferred_positioning",
+    "services_to_highlight",
+    "topics_to_avoid",
+    "compliance_notes",
+    "delivery_contact",
+)
+
+
+def _as_str(value) -> str:
+    return str(value).strip() if value is not None else ""
+
+
+def _as_list(value) -> list[str]:
+    if not value:
+        return []
+    if isinstance(value, str):
+        return [value.strip()] if value.strip() else []
+    return [str(v).strip() for v in value if str(v).strip()]
+
+
 @dataclass
 class ClientInput:
+    # --- hard-required core (STEP 1) ---
     brand: str
     website: str
     keywords: list[str]
     niche: str
     package: str
+    # --- operational identifiers ---
+    order_id: str = ""
+    client_slug: str = ""
+    # --- recommended intake (warn if missing) ---
     brand_variations: list[str] = field(default_factory=list)
+    country: str = ""
+    language: str = ""
+    competitors_known: list[str] = field(default_factory=list)
+    target_urls: list[str] = field(default_factory=list)
+    preferred_positioning: str = ""
+    services_to_highlight: list[str] = field(default_factory=list)
+    topics_to_avoid: list[str] = field(default_factory=list)
+    compliance_notes: str = ""
+    delivery_contact: str = ""
+    # --- optional extras ---
+    brand_descriptions: str = ""
+    preferred_models: list[str] = field(default_factory=list)
+    question_angles: list[str] = field(default_factory=list)
+    example_customers: list[str] = field(default_factory=list)
+    negative_competitors: list[str] = field(default_factory=list)
+    tone_notes: str = ""
+    # --- runtime ---
     warnings: list[str] = field(default_factory=list)
 
     @classmethod
@@ -80,14 +131,29 @@ class ClientInput:
             raise ValueError("Input JSON must be an object.")
 
         ci = cls(
-            brand=str(data.get("brand", "")).strip(),
-            website=str(data.get("website", "")).strip(),
-            keywords=[str(k).strip() for k in data.get("keywords", []) if str(k).strip()],
-            niche=str(data.get("niche", "")).strip(),
-            package=str(data.get("package", "")).strip().upper(),
-            brand_variations=[
-                str(v).strip() for v in data.get("brand_variations", []) if str(v).strip()
-            ],
+            brand=_as_str(data.get("brand")),
+            website=_as_str(data.get("website")),
+            keywords=_as_list(data.get("keywords")),
+            niche=_as_str(data.get("niche")),
+            package=_as_str(data.get("package")).upper(),
+            order_id=_as_str(data.get("order_id")),
+            client_slug=_as_str(data.get("client_slug")),
+            brand_variations=_as_list(data.get("brand_variations")),
+            country=_as_str(data.get("country")),
+            language=_as_str(data.get("language")),
+            competitors_known=_as_list(data.get("competitors_known")),
+            target_urls=_as_list(data.get("target_urls")),
+            preferred_positioning=_as_str(data.get("preferred_positioning")),
+            services_to_highlight=_as_list(data.get("services_to_highlight")),
+            topics_to_avoid=_as_list(data.get("topics_to_avoid")),
+            compliance_notes=_as_str(data.get("compliance_notes")),
+            delivery_contact=_as_str(data.get("delivery_contact")),
+            brand_descriptions=_as_str(data.get("brand_descriptions")),
+            preferred_models=_as_list(data.get("preferred_models")),
+            question_angles=_as_list(data.get("question_angles")),
+            example_customers=_as_list(data.get("example_customers")),
+            negative_competitors=_as_list(data.get("negative_competitors")),
+            tone_notes=_as_str(data.get("tone_notes")),
         )
         ci.validate()
         return ci
@@ -103,6 +169,16 @@ class ClientInput:
             if v and v not in terms:
                 terms.append(v)
         return terms
+
+    def intake_completeness(self) -> tuple[int, int, list[str]]:
+        """Return (filled, total, missing[]) over the recommended intake fields."""
+        missing: list[str] = []
+        for fname in RECOMMENDED_INTAKE:
+            val = getattr(self, fname)
+            if not val:
+                missing.append(fname)
+        total = len(RECOMMENDED_INTAKE)
+        return total - len(missing), total, missing
 
     def validate(self) -> None:
         """Raise ValueError on any blocking problem; collect soft warnings."""
@@ -129,6 +205,13 @@ class ClientInput:
             self.warnings.append(
                 f"{self.package} package adds brand variations, but only "
                 f"{len(self.brand_variations)} provided (2-4 recommended)."
+            )
+        # Soft warning: recommended intake completeness (does not block).
+        filled, total, missing = self.intake_completeness()
+        if missing:
+            self.warnings.append(
+                f"intake {filled}/{total} complete - missing recommended fields: "
+                f"{', '.join(missing)} (see docs/CLIENT_REQUIREMENTS.md)."
             )
 
 

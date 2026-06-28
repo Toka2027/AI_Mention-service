@@ -2,13 +2,14 @@
 
 from __future__ import annotations
 
+import json
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
 import pytest
 
-from engine import extractor, generator, pages, report
-from engine.models import PACKAGES, ClientInput, Question, ResponseRow
+from engine import extractor, generator, main, pages, report
+from engine.models import PACKAGES, RECOMMENDED_INTAKE, ClientInput, Question, ResponseRow
 
 
 def make_ci(package="PRO", keywords=None, brand="1BillionLinks"):
@@ -158,3 +159,94 @@ def test_pdf_and_screenshot_created(tmp_path: Path):
     made, expected = report.write_screenshots(qs, rows, ci, tmp_path / "shots")
     assert made >= 1
     assert (tmp_path / "shots" / "EXPECTED_FILES.txt").exists()
+
+
+def test_screenshot_manifest_has_fullpage_rules_and_fallback(tmp_path: Path):
+    ci = make_ci("BASIC")
+    qs = generator.generate_questions(ci, ci.pkg.n_questions)
+    rows = generator.build_capture_template(qs, ci.pkg.models)
+    report.write_screenshots(qs, rows, ci, tmp_path / "shots")
+    txt = (tmp_path / "shots" / "EXPECTED_FILES.txt").read_text(encoding="utf-8")
+    assert "FULL-PAGE" in txt
+    assert "_part1.png" in txt          # documented fallback
+    assert "q1_chatgpt.png" in txt      # consistent naming convention
+
+
+# --- intake / client requirements -------------------------------------------
+
+def test_intake_completeness_flags_missing_fields():
+    ci = make_ci("PRO")  # only core + brand_variations set
+    filled, total, missing = ci.intake_completeness()
+    assert total == len(RECOMMENDED_INTAKE)
+    assert "country" in missing and "compliance_notes" in missing
+    assert "brand_variations" not in missing  # this one is provided
+    ci.warnings.clear()
+    ci.validate()
+    assert any("intake" in w for w in ci.warnings)
+
+
+def test_from_json_parses_intake_fields(tmp_path: Path):
+    data = {
+        "brand": "Acme Co", "website": "https://acme.example",
+        "niche": "widget services", "package": "BASIC",
+        "keywords": ["blue widgets", "red widgets", "green widgets"],
+        "order_id": "ORD-9", "country": "US", "topics_to_avoid": ["x", "y"],
+        "competitors_known": ["WidgetCo"],
+    }
+    p = tmp_path / "acme.json"
+    p.write_text(json.dumps(data), encoding="utf-8")
+    ci = ClientInput.from_json(str(p))
+    assert ci.order_id == "ORD-9"
+    assert ci.country == "US"
+    assert ci.topics_to_avoid == ["x", "y"]
+    assert ci.competitors_known == ["WidgetCo"]
+
+
+# --- multi-order isolation (run integration) --------------------------------
+
+def _write_acme(tmp_path: Path) -> Path:
+    data = {
+        "brand": "Acme Co", "brand_variations": ["Acme", "ACME"],
+        "website": "https://acme.example", "niche": "widget services",
+        "keywords": ["blue widgets", "red widgets", "green widgets"], "package": "BASIC",
+    }
+    p = tmp_path / "acme.json"
+    p.write_text(json.dumps(data), encoding="utf-8")
+    return p
+
+
+def _write_acme_responses(tmp_path: Path, inp: Path) -> Path:
+    ci = ClientInput.from_json(str(inp))
+    qs = generator.generate_questions(ci, ci.pkg.n_questions)
+    rows = generator.build_capture_template(qs, ci.pkg.models)
+    rows[0].answer = "Acme Co is one widget provider."
+    rows[0].competitors = ["WidgetCo"]
+    p = tmp_path / "acme_responses.csv"
+    report.write_capture_template(rows, qs, p)
+    return p
+
+
+def test_run_multi_order_isolation_and_unique_zip(tmp_path: Path):
+    inp = _write_acme(tmp_path)
+    resp = _write_acme_responses(tmp_path, inp)
+    out = tmp_path / "outputs"
+
+    d1 = main.run(str(inp), str(resp), str(out), order_id="ORD-A")
+    d2 = main.run(str(inp), str(resp), str(out), order_id="ORD-B")
+
+    # Separate per-order folders under the same client slug.
+    assert d1 == out / "acme-co" / "ord-a"
+    assert d2 == out / "acme-co" / "ord-b"
+    assert d1.exists() and d2.exists()
+
+    # Unique, non-overwriting ZIPs.
+    z1 = out / "acme-co" / "ord-a_deliverable.zip"
+    z2 = out / "acme-co" / "ord-b_deliverable.zip"
+    assert z1.exists() and z2.exists()
+
+    # Order brief reflects the resolved order id (guards against data mixing).
+    assert "ord-a" in (d1 / "order_brief.md").read_text(encoding="utf-8").lower()
+
+    # Re-running ORD-A must not delete ORD-B.
+    main.run(str(inp), str(resp), str(out), order_id="ORD-A")
+    assert d2.exists() and z2.exists()

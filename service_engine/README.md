@@ -54,16 +54,22 @@ the Python standard library.
 
 ```bash
 # Full pilot run (questions + capture template + master table + pages + sitemap +
-# PDF + screenshots + links + ZIP)
+# PDF + full-page screenshots + links + order brief + ZIP)
 python -m engine.main run \
   --input inputs/1billionlinks.json \
   --responses inputs/1billionlinks_responses.csv \
+  --order-id 2026-06-28-001 \
   --out outputs
 
 # Questions-only run (STEP 1–3 + previews). Generates the question set and an empty
 # capture template to fill manually; pages/tables show "[pending capture]".
-python -m engine.main run --input inputs/1billionlinks.json --out outputs
+python -m engine.main run --input inputs/1billionlinks.json --order-id 2026-06-28-001 --out outputs
 ```
+
+`--order-id` makes each order self-contained. If omitted, the engine uses `order_id` from the input
+JSON, else `order-001` (with a warning). Output goes to **`outputs/<client-slug>/<order-id>/`** and the
+ZIP to **`outputs/<client-slug>/<order-id>_deliverable.zip`** — re-running one order never overwrites
+another. See [Multi-order & operations](#multi-order--operations).
 
 ## Test
 
@@ -94,20 +100,21 @@ Rules: `brand`, `website` (http/https) and `niche` required; **3–7 keywords**;
 
 ## Workflow with the manual capture step
 
-1. Run **questions-only** → get `outputs/<client>/responses_template.csv` and `query_plan.md`.
+1. Run **questions-only** → get `outputs/<client>/<order>/responses_template.csv` and `query_plan.md`.
 2. The delivery team performs **STEP 3** manually: ask each in-scope model the question, paste each
    current answer into the `answer` column, list URLs and competitors (pipe `|` separated), and save
-   each screenshot as `q{id}_{model}.png`.
+   each **full-page** screenshot as `q{id}_{model}.png` (see [docs/SCREENSHOT_GUIDE.md](docs/SCREENSHOT_GUIDE.md)).
 3. Run again with `--responses <filled csv>` → full deliverables.
 
 ---
 
-## Output (`outputs/<client>/`)
+## Output (`outputs/<client-slug>/<order-id>/`)
 
 ```
+order_brief.md                     # intake echo + safety constraints (verify before delivery)
 questions.csv / questions.json     # STEP 2 question set
 responses_template.csv             # STEP 3 capture template (to fill)
-query_plan.md                      # STEP 3 manual instructions
+query_plan.md                      # STEP 3 manual instructions (incl. full-page screenshots)
 master_table.csv                   # STEP 4 master table
 source_frequency.csv               # STEP 4 URL frequency
 competitor_frequency.csv           # STEP 4 competitor frequency
@@ -115,13 +122,24 @@ pages/*.html                       # STEP 5 crawlable support pages (+ JSON-LD o
 sitemap.xml                        # STEP 6
 support_page_urls.txt              # links: created support pages
 source_links.csv                   # links: extracted source URLs
-screenshots/*.png                  # STEP 7 answer-proof images (captured answers)
-screenshots/EXPECTED_FILES.txt     # filenames still to capture manually
+screenshots/*.png                  # STEP 7 full-page answer-proof images (captured answers)
+screenshots/EXPECTED_FILES.txt     # full-page screenshot manifest + rules + fallback
 report.pdf                         # STEP 7 client report
 submission_checklist.md            # STEP 6 publication & crawl checklist
-manifest.json                      # file inventory
-../<client>_deliverable.zip        # STEP 7 ZIP
+manifest.json                      # file inventory + order metadata
 ```
+The ZIP is written one level up at `outputs/<client-slug>/<order-id>_deliverable.zip`.
+
+## Multi-order & operations
+
+Each order is fully isolated under `outputs/<client-slug>/<order-id>/` with its own ZIP, so multiple
+clients/orders never overwrite or mix. Operational docs:
+
+- [docs/CLIENT_REQUIREMENTS.md](docs/CLIENT_REQUIREMENTS.md) — what to collect from the client.
+- [docs/OPERATOR_CHECKLIST.md](docs/OPERATOR_CHECKLIST.md) — step-by-step delivery SOP.
+- [docs/SCREENSHOT_GUIDE.md](docs/SCREENSHOT_GUIDE.md) — full-page screenshot rules + fallback.
+- [docs/CLIENT_SAFE_NOTES.md](docs/CLIENT_SAFE_NOTES.md) — approved positioning / banned wording.
+- [docs/READINESS_ASSESSMENT.md](docs/READINESS_ASSESSMENT.md) — readiness score + gaps + next steps.
 
 ---
 
@@ -131,8 +149,9 @@ manifest.json                      # file inventory
 - Capture: `inputs/1billionlinks_responses.csv` — the **Claude** column holds genuine Claude answers
   captured 2026-06-28 (see `inputs/1billionlinks_responses.NOTES.md`); ChatGPT/Gemini/Perplexity are
   left for the team. Claude's low recognition of the brand is recorded honestly and *is* the
-  "AI understanding gap" the service measures.
-- Output: `outputs/1billionlinks/`.
+  "AI understanding gap" the review surfaces.
+- Order id: `2026-06-28-001`. Output: `outputs/1billionlinks/2026-06-28-001/`;
+  ZIP: `outputs/1billionlinks/2026-06-28-001_deliverable.zip`.
 
 ## Assumptions
 
