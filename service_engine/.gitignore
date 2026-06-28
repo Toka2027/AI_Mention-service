@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+venv/
+
+# Regenerable ZIP deliverables (the unzipped output folder is kept in-repo)
+outputs/*_deliverable.zip
+
+# OS / editor
+.DS_Store
+Thumbs.db

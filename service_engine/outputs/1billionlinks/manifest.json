@@ -1,0 +1,206 @@
+{
+  "client_output": "1billionlinks",
+  "file_count": 50,
+  "files": [
+    {
+      "path": "competitor_frequency.csv",
+      "bytes": 225
+    },
+    {
+      "path": "indexing_urls.txt",
+      "bytes": 827
+    },
+    {
+      "path": "master_table.csv",
+      "bytes": 33343
+    },
+    {
+      "path": "pages/1billionlinks-backlinks-q11.html",
+      "bytes": 4398
+    },
+    {
+      "path": "pages/1billionlinks-backlinks-q2.html",
+      "bytes": 4577
+    },
+    {
+      "path": "pages/1billionlinks-backlinks-q7.html",
+      "bytes": 4439
+    },
+    {
+      "path": "pages/1billionlinks-domain-authority-q4.html",
+      "bytes": 4737
+    },
+    {
+      "path": "pages/1billionlinks-domain-authority-q9.html",
+      "bytes": 4516
+    },
+    {
+      "path": "pages/1billionlinks-press-release-distribution-q12.html",
+      "bytes": 4536
+    },
+    {
+      "path": "pages/1billionlinks-press-release-distribution-q3.html",
+      "bytes": 4745
+    },
+    {
+      "path": "pages/1billionlinks-press-release-distribution-q8.html",
+      "bytes": 4592
+    },
+    {
+      "path": "pages/1billionlinks-seo-link-building-q1.html",
+      "bytes": 4974
+    },
+    {
+      "path": "pages/1billionlinks-seo-link-building-q10.html",
+      "bytes": 4568
+    },
+    {
+      "path": "pages/1billionlinks-seo-link-building-q6.html",
+      "bytes": 4638
+    },
+    {
+      "path": "pages/1billionlinks-tier-2-and-tier-3-backlink-campaigns-q5.html",
+      "bytes": 4870
+    },
+    {
+      "path": "query_plan.md",
+      "bytes": 5046
+    },
+    {
+      "path": "questions.csv",
+      "bytes": 4172
+    },
+    {
+      "path": "questions.json",
+      "bytes": 6845
+    },
+    {
+      "path": "report.pdf",
+      "bytes": 3456
+    },
+    {
+      "path": "responses_template.csv",
+      "bytes": 17442
+    },
+    {
+      "path": "screenshots/EXPECTED_FILES.txt",
+      "bytes": 1439
+    },
+    {
+      "path": "screenshots/q10_claude.png",
+      "bytes": 37168
+    },
+    {
+      "path": "screenshots/q11_claude.png",
+      "bytes": 33139
+    },
+    {
+      "path": "screenshots/q12_claude.png",
+      "bytes": 34454
+    },
+    {
+      "path": "screenshots/q13_claude.png",
+      "bytes": 35035
+    },
+    {
+      "path": "screenshots/q14_claude.png",
+      "bytes": 35741
+    },
+    {
+      "path": "screenshots/q15_claude.png",
+      "bytes": 35308
+    },
+    {
+      "path": "screenshots/q16_claude.png",
+      "bytes": 32352
+    },
+    {
+      "path": "screenshots/q17_claude.png",
+      "bytes": 33837
+    },
+    {
+      "path": "screenshots/q18_claude.png",
+      "bytes": 34334
+    },
+    {
+      "path": "screenshots/q19_claude.png",
+      "bytes": 35127
+    },
+    {
+      "path": "screenshots/q1_claude.png",
+      "bytes": 41879
+    },
+    {
+      "path": "screenshots/q20_claude.png",
+      "bytes": 35114
+    },
+    {
+      "path": "screenshots/q21_claude.png",
+      "bytes": 35074
+    },
+    {
+      "path": "screenshots/q22_claude.png",
+      "bytes": 33630
+    },
+    {
+      "path": "screenshots/q23_claude.png",
+      "bytes": 34210
+    },
+    {
+      "path": "screenshots/q24_claude.png",
+      "bytes": 35201
+    },
+    {
+      "path": "screenshots/q25_claude.png",
+      "bytes": 37834
+    },
+    {
+      "path": "screenshots/q2_claude.png",
+      "bytes": 37823
+    },
+    {
+      "path": "screenshots/q3_claude.png",
+      "bytes": 39090
+    },
+    {
+      "path": "screenshots/q4_claude.png",
+      "bytes": 38169
+    },
+    {
+      "path": "screenshots/q5_claude.png",
+      "bytes": 38739
+    },
+    {
+      "path": "screenshots/q6_claude.png",
+      "bytes": 37621
+    },
+    {
+      "path": "screenshots/q7_claude.png",
+      "bytes": 33709
+    },
+    {
+      "path": "screenshots/q8_claude.png",
+      "bytes": 35101
+    },
+    {
+      "path": "screenshots/q9_claude.png",
+      "bytes": 35618
+    },
+    {
+      "path": "sitemap.xml",
+      "bytes": 1348
+    },
+    {
+      "path": "source_frequency.csv",
+      "bytes": 214
+    },
+    {
+      "path": "source_links.csv",
+      "bytes": 231
+    },
+    {
+      "path": "submission_checklist.md",
+      "bytes": 1551
+    }
+  ]
+}

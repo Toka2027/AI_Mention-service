@@ -1,0 +1,8 @@
+# AI Mention – LLM Query Seeding engine
+# Runtime deps are deliberately minimal. Everything else uses the Python stdlib
+# (csv, json, xml, shutil, argparse).
+fpdf2>=2.7        # STEP 7: real PDF report deliverable
+Pillow>=10.0      # STEP 7: PNG "answer proof" screenshots
+
+# Dev / test only
+pytest>=7.0
