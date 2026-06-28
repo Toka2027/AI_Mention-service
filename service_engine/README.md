@@ -71,11 +71,32 @@ JSON, else `order-001` (with a warning). Output goes to **`outputs/<client-slug>
 ZIP to **`outputs/<client-slug>/<order-id>_deliverable.zip`** — re-running one order never overwrites
 another. See [Multi-order & operations](#multi-order--operations).
 
-## Test
+## QA gate (run before delivering any order)
 
 ```bash
-python -m pytest -q
+python -m engine.main verify --client-slug 1billionlinks --order-id 2026-06-28-001 --out outputs
+# add --strict-screenshots to require all manual full-page screenshots before delivery
 ```
+Exit code 1 = at least one `[FAIL]` → do not deliver. See [docs/QA_GATE.md](docs/QA_GATE.md).
+
+## Test
+
+Tests live in `service_engine/` and import the `engine` package, so they must run with
+`service_engine` on the path. Use any of:
+
+```bash
+# from service_engine/ (canonical)
+cd service_engine && python -m pytest -q
+
+# from the repo root (works via the root pytest.ini `pythonpath` setting)
+python -m pytest
+
+# or the Makefile target (from the repo root)
+make test
+```
+
+Do **not** run `python -m pytest service_engine` from the repo root without the config — it fails on
+`import engine`. The root `pytest.ini` handles the path so plain `python -m pytest` works.
 
 ---
 
@@ -130,16 +151,40 @@ manifest.json                      # file inventory + order metadata
 ```
 The ZIP is written one level up at `outputs/<client-slug>/<order-id>_deliverable.zip`.
 
+## Operator runbook (quick order of operations)
+
+The exact linear flow for one order (full SOP in [docs/OPERATOR_CHECKLIST.md](docs/OPERATOR_CHECKLIST.md)):
+
+1. **Create client input** — `inputs/<client-slug>.json` with `order_id` + intake fields
+   (see [docs/SEOESTORE_INTAKE_FORM.md](docs/SEOESTORE_INTAKE_FORM.md)).
+2. **Run the engine** (questions-only) — `python -m engine.main run --input inputs/<client>.json --order-id <ORDER> --out outputs`
+   → review `questions.csv`, `query_plan.md`, `responses_template.csv`.
+3. **Collect model responses + full-page screenshots** — ask each in-scope model; save shots to the
+   order's `screenshots/` as `q{id}_{model}.png`; paste answers into `inputs/<client>_<order>_responses.csv`.
+4. **Regenerate the package** — re-run with `--responses inputs/<client>_<order>_responses.csv`
+   → builds master table, support pages, sitemap, report, proofs, links, ZIP.
+5. **Run verify** — `python -m engine.main verify --client-slug <slug> --order-id <ORDER>`
+   (add `--strict-screenshots` for a full delivery).
+6. **Fix warnings/failures** — resolve every `[FAIL]`, review every `[WARN]`, re-run steps 3–5 as needed.
+7. **Export/send the report** — deliver `outputs/<client-slug>/<order-id>_deliverable.zip`; if publishing
+   pages, complete `submission_checklist.md`.
+
 ## Multi-order & operations
 
 Each order is fully isolated under `outputs/<client-slug>/<order-id>/` with its own ZIP, so multiple
 clients/orders never overwrite or mix. Operational docs:
 
 - [docs/CLIENT_REQUIREMENTS.md](docs/CLIENT_REQUIREMENTS.md) — what to collect from the client.
+- [docs/SEOESTORE_INTAKE_FORM.md](docs/SEOESTORE_INTAKE_FORM.md) — customer-facing order-form structure.
 - [docs/OPERATOR_CHECKLIST.md](docs/OPERATOR_CHECKLIST.md) — step-by-step delivery SOP.
 - [docs/SCREENSHOT_GUIDE.md](docs/SCREENSHOT_GUIDE.md) — full-page screenshot rules + fallback.
+- [docs/QA_GATE.md](docs/QA_GATE.md) — automated + manual pre-delivery QA gate.
+- [docs/HOSTING_WORKFLOW.md](docs/HOSTING_WORKFLOW.md) — where to host the support pages (+ recommendation).
+- [docs/ALL_MODEL_PILOT.md](docs/ALL_MODEL_PILOT.md) — capture status + steps for the 4-model pilot.
 - [docs/CLIENT_SAFE_NOTES.md](docs/CLIENT_SAFE_NOTES.md) — approved positioning / banned wording.
 - [docs/READINESS_ASSESSMENT.md](docs/READINESS_ASSESSMENT.md) — readiness score + gaps + next steps.
+- [docs/PR_READINESS_CHECKLIST.md](docs/PR_READINESS_CHECKLIST.md) — stage gates (pilot / paid / launch / hosting).
+- [docs/samples/](docs/samples/) — sanitized, sales-safe sample report (`1billionlinks_sample_report.pdf`).
 
 ---
 

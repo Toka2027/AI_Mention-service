@@ -14,7 +14,7 @@ import shutil
 import sys
 from pathlib import Path
 
-from . import extractor, generator, pages, report
+from . import extractor, generator, pages, report, verify
 from .models import ClientInput, Question, ResponseRow
 
 
@@ -174,6 +174,15 @@ def build_parser() -> argparse.ArgumentParser:
         help="Unique order id (e.g. SEOeStore order number). Falls back to 'order_id' in the "
         "input JSON, else 'order-001'. Output goes to outputs/<client-slug>/<order-id>/.",
     )
+
+    verify_p = sub.add_parser("verify", help="QA gate: check an order folder before delivery.")
+    verify_p.add_argument("--client-slug", dest="client_slug", required=True, help="Client slug.")
+    verify_p.add_argument("--order-id", dest="order_id", required=True, help="Order id.")
+    verify_p.add_argument("--out", default="outputs", help="Output root directory (default: outputs).")
+    verify_p.add_argument("--min-intake", dest="min_intake", type=int, default=8,
+                          help="Minimum acceptable intake completeness (default: 8).")
+    verify_p.add_argument("--strict-screenshots", dest="strict_screenshots", action="store_true",
+                          help="Treat missing manual full-page screenshots as a FAIL (not a WARN).")
     return parser
 
 
@@ -185,6 +194,13 @@ def main(argv: list[str] | None = None) -> int:
         except (ValueError, FileNotFoundError) as exc:
             print(f"ERROR: {exc}", file=sys.stderr)
             return 1
+    elif args.command == "verify":
+        result = verify.verify_order(
+            args.out, args.client_slug, args.order_id,
+            min_intake=args.min_intake, strict_screenshots=args.strict_screenshots,
+        )
+        print(verify.format_report(result))
+        return 1 if result["overall"] == verify.FAIL else 0
     return 0
 
 
