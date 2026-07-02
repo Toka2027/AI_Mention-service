@@ -323,3 +323,26 @@ def test_scan_banned_allows_disclaimer_flags_promise(tmp_path: Path):
     assert verify._scan_banned(tmp_path) == []
     (tmp_path / "bad.md").write_text("We guarantee AI rankings for your brand.", encoding="utf-8")
     assert len(verify._scan_banned(tmp_path)) == 1
+
+
+def test_write_screenshots_preserves_real_and_renders_proof(tmp_path: Path):
+    ci = make_ci("PRO")
+    qs = generator.generate_questions(ci, ci.pkg.n_questions)
+    rows = generator.build_capture_template(qs, ci.pkg.models)
+    rows[0].answer = "1BillionLinks real-screenshot row."   # q1_chatgpt.png
+    rows[1].answer = "1BillionLinks proof-card row."         # q1_gemini.png
+    provided = tmp_path / "provided"
+    provided.mkdir()
+    real_name = rows[0].screenshot_filename
+    real_bytes = b"REAL-OPERATOR-SCREENSHOT-BYTES"
+    (provided / real_name).write_bytes(real_bytes)
+
+    shots = tmp_path / "shots"
+    made, pending = report.write_screenshots(qs, rows, ci, shots, provided_dir=provided)
+
+    # Real operator screenshot is copied verbatim (NOT overwritten by a proof card).
+    assert (shots / real_name).read_bytes() == real_bytes
+    # A captured row with no supplied screenshot gets an engine-rendered PNG.
+    proof_name = rows[1].screenshot_filename
+    assert (shots / proof_name).read_bytes()[:8] == b"\x89PNG\r\n\x1a\n"
+    assert made == 2

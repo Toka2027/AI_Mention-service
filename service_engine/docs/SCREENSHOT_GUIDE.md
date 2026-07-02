@@ -14,9 +14,11 @@ Screenshots are proof of how each AI tool answered. They must be **full-page**, 
    The generated **Claude** proofs already follow this (e.g. `q1_claude.png`).
 4. **Readability:** 100% zoom, light theme preferred, no blur. Redact personal data
    (account email, avatar) before saving.
-5. **Where to save:** the order's `screenshots/` folder
-   (`outputs/<client-slug>/<order-id>/screenshots/`). The exact list of files to provide is in
-   `screenshots/EXPECTED_FILES.txt` for each order.
+5. **Where to save (IMPORTANT):** the **persistent input** folder
+   `inputs/screenshots/<client-slug>/<order-id>/` — NOT the output folder. The engine copies these
+   into the delivered `outputs/.../screenshots/` on each run and never overwrites them. The output
+   `screenshots/` folder is regenerated (wiped) on every run, so files placed there are lost.
+   The exact list of files to provide is in the delivered `screenshots/EXPECTED_FILES.txt` for each order.
 
 ## Fallback (when a true full-page capture is not possible)
 Some platforms/streamed answers resist single-shot full-page capture. Then:

@@ -397,36 +397,58 @@ def write_screenshots(
     ci: ClientInput,
     shots_dir: Path,
     report_date: str = REPORT_DATE,
+    provided_dir: Path | None = None,
 ) -> tuple[int, list[str]]:
-    """Render full-page proof PNGs for captured answers; write a manifest listing
-    the full-page screenshots still to be captured manually."""
+    """Assemble the order's screenshots and write the manifest.
+
+    For each captured answer: if the operator supplied a real full-page screenshot in
+    ``provided_dir`` (matching ``q{id}_{model}*.png`` - single file or ``_partN`` fallback),
+    copy it in verbatim (real screenshots win, nothing is overwritten). Otherwise render an
+    engine proof PNG (e.g. the in-session Claude captures). Pending answers are listed as
+    still-to-capture. ``provided_dir`` is a persistent input path, unaffected by output re-runs.
+    """
     shots_dir.mkdir(parents=True, exist_ok=True)
     by_id = {q.id: q for q in questions}
     made = 0
     pending: list[tuple[str, int, str, str]] = []  # (filename, qid, model, question)
-    captured_files: list[str] = []
+    provided_files: list[str] = []   # real operator screenshots copied in
+    generated_files: list[str] = []  # engine proof cards rendered
     for r in responses:
         q = by_id.get(r.question_id)
         if q is None:
             continue
         name = r.screenshot_filename or f"q{r.question_id}_{r.model.lower()}.png"
-        if r.is_captured:
-            render_screenshot(q, r, ci, shots_dir / name, report_date)
-            captured_files.append(name)
-            made += 1
-        else:
+        if not r.is_captured:
             pending.append((name, r.question_id, r.model, q.text))
+            continue
+        stem = f"q{r.question_id}_{r.model.lower()}"
+        supplied = sorted(provided_dir.glob(stem + "*.png")) if provided_dir else []
+        if supplied:
+            for src in supplied:
+                shutil.copyfile(src, shots_dir / src.name)
+                provided_files.append(src.name)
+        else:
+            render_screenshot(q, r, ci, shots_dir / name, report_date)
+            generated_files.append(name)
+        made += 1
 
     lines: list[str] = list(SCREENSHOT_RULES)
-    lines.append(f"Captured automatically this run (generated full-page proofs): {len(captured_files)}")
-    for f in captured_files:
-        lines.append(f"  [done] {f}")
+    lines.append(f"Real operator screenshots supplied this run: {len(provided_files)}")
+    for f in provided_files:
+        lines.append(f"  [real] {f}")
+    lines.append("")
+    lines.append(f"Engine proof PNGs generated (no real screenshot supplied): {len(generated_files)}")
+    for f in generated_files:
+        lines.append(f"  [proof] {f}")
     lines.append("")
     lines.append(f"Manual full-page screenshots still required: {len(pending)}")
     lines.append("filename | model | question")
     for (name, qid, model, qtext) in pending:
         lines.append(f"  [ ] {name} | {model} | Q{qid}: {qtext}")
     lines.append("")
+    if provided_dir:
+        lines.append(f"Supply real full-page screenshots in: {provided_dir}")
+        lines.append("")
     (shots_dir / "EXPECTED_FILES.txt").write_text("\n".join(lines) + "\n", encoding="utf-8")
     return made, [p[0] for p in pending]
 

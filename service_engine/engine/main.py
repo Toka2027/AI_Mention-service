@@ -130,18 +130,23 @@ def run(input_path: str, responses_path: str | None, out_root: str, order_id: st
         "report_date": report.REPORT_DATE,
     }
 
+    # Persistent location for operator-supplied real full-page screenshots. Lives
+    # next to the inputs (not under out_dir, which is wiped each run), so real
+    # screenshots survive re-runs and are copied into the delivered screenshots/.
+    shots_input = Path(input_path).resolve().parent / "screenshots" / client_slug / order_id
+
     # --- STEP 7: deliverables (only with real captures) --------------------
     if has_responses:
         report.render_pdf_report(ci, master, src_freq, comp_freq, pages_urls, out_dir / "report.pdf")
         made, expected = report.write_screenshots(
-            questions, responses, ci, out_dir / "screenshots"
+            questions, responses, ci, out_dir / "screenshots", provided_dir=shots_input
         )
         report.write_submission_checklist(ci, pages_urls, out_dir)
         manifest = report.write_manifest(out_dir, order_meta)
         archive_base = Path(out_root) / client_slug / f"{order_id}_deliverable"
         archive = report.assemble_zip(out_dir, archive_base)
         print(
-            f"STEP 7  report.pdf + {made} full-page proof(s) ({len(expected)} manual screenshots pending) "
+            f"STEP 7  report.pdf + {made} screenshot(s) assembled ({len(expected)} manual screenshots pending) "
             f"+ checklist + order_brief + manifest ({manifest['file_count']} files)"
         )
         print(f"        ZIP deliverable: {archive}")

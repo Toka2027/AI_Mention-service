@@ -19,13 +19,14 @@ Goal: one complete pilot with all four PRO models captured — **ChatGPT, Gemini
 3. **Full-page screenshot** of each answer (rules + fallback: `docs/SCREENSHOT_GUIDE.md`).
 
 ### Where screenshots go
-Save into:
+Save into the **persistent input** folder (NOT the output folder, which is wiped on each run):
 ```
-outputs/1billionlinks/2026-06-28-001/screenshots/
+inputs/screenshots/1billionlinks/2026-06-28-001/
 ```
 Exact filenames (lower-case model): `q{ID}_chatgpt.png`, `q{ID}_gemini.png`, `q{ID}_perplexity.png`
-(`q1_chatgpt.png` … `q25_chatgpt.png`, etc.). The full list to provide is in
-`outputs/1billionlinks/2026-06-28-001/screenshots/EXPECTED_FILES.txt`.
+(`q1_chatgpt.png` … `q25_chatgpt.png`, etc.). On the next run the engine copies these into the
+delivered `outputs/1billionlinks/2026-06-28-001/screenshots/` without overwriting them. The full list
+to provide is in the delivered `screenshots/EXPECTED_FILES.txt`.
 
 ### Where responses go
 Edit the capture CSV (the master capture file for this order):
