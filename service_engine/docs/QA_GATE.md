@@ -9,9 +9,16 @@ and a **manual** fallback. Run the automated gate first; resolve every `[FAIL]` 
 python -m engine.main verify --client-slug <slug> --order-id <order-id> --out outputs
 # stricter (treat any missing manual full-page screenshot as a hard fail):
 python -m engine.main verify --client-slug <slug> --order-id <order-id> --strict-screenshots
+# require REAL browser screenshots for all captured models except in-session proofs (e.g. Claude):
+python -m engine.main verify --client-slug <slug> --order-id <order-id> --strict-screenshots --proof-ok-models Claude
 ```
 - Exit code **0** = no FAIL (PASS or WARN). Exit code **1** = at least one FAIL → **do not deliver**.
 - `--min-intake N` sets the acceptable intake completeness (default 8).
+- `--proof-ok-models` lists models allowed to use an engine proof card; every **other** captured model
+  must have a **real browser screenshot** in `inputs/screenshots/<slug>/<order>/` (checked in strict mode).
+  Without this, strict PASS could be satisfied by engine-rendered proof cards alone.
+- `--screenshots-input <dir>` overrides the real-screenshots input folder (default `inputs/screenshots/<slug>/<order>`).
+- Pre-run progress: `python tools/capture_status.py` lists answers + real screenshots present and what's missing.
 
 ### What it checks (maps to the delivery requirements)
 | Check | Severity if not met |
@@ -24,6 +31,7 @@ python -m engine.main verify --client-slug <slug> --order-id <order-id> --strict
 | Intake completeness ≥ threshold | WARN |
 | Captured-answer screenshots present | FAIL |
 | Manual full-page screenshots present | WARN (FAIL with `--strict-screenshots`) |
+| Real browser screenshots for required models (not proof-ok) | FAIL in `--strict-screenshots` |
 | Screenshot naming `q{id}_{model}.png` | WARN |
 | Full-page rules + fallback documented | WARN |
 | Client-safe wording (no banned promises) | FAIL |

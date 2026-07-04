@@ -75,6 +75,8 @@ def verify_order(
     order_id: str,
     min_intake: int = 8,
     strict_screenshots: bool = False,
+    proof_ok_models: set[str] | None = None,
+    screenshots_input: str | None = None,
 ) -> dict:
     slug = slugify(client_slug)
     oid = slugify(order_id)
@@ -178,6 +180,31 @@ def verify_order(
              f"{len(pending)} full-page screenshot(s) still to capture")
     else:
         _add(checks, "manual screenshots present", PASS, "all expected screenshots present")
+
+    # Strict-only: require REAL browser screenshots (in the persistent input dir) for every captured
+    # answer, except models explicitly allowed to use an engine proof card (e.g. the in-session
+    # Claude capture). This makes "strict PASS" actually mean real ChatGPT/Gemini/Perplexity captures
+    # exist, not just engine-rendered proof cards in the output folder.
+    if strict_screenshots:
+        proof_ok = {m.lower() for m in (proof_ok_models or set())}
+        sin = Path(screenshots_input) if screenshots_input else (Path("inputs/screenshots") / slug / oid)
+        missing_real = []
+        for r in m_rows:
+            if (r.get("answer_excerpt") or "") == ResponseRow.PENDING:
+                continue  # no answer yet -> already covered by "manual screenshots present"
+            model = (r.get("model") or "").lower()
+            if model in proof_ok:
+                continue
+            stem = f"q{r['question_id']}_{model}"
+            has_real = bool(list(sin.glob(stem + "*.png"))) if sin.exists() else False
+            if not has_real:
+                missing_real.append(f"{stem}.png")
+        _add(checks, "real browser screenshots (required models)",
+             PASS if not missing_real else FAIL,
+             f"all present in {sin}" if not missing_real
+             else f"missing {len(missing_real)} real screenshot(s) in {sin}: "
+                  f"{missing_real[:5]}{'...' if len(missing_real) > 5 else ''} "
+                  f"(proof-ok models: {sorted(proof_ok) or 'none'})")
 
     strays = [n for n in pngs if not _PNG_RE.match(n)]
     _add(checks, "screenshot naming", PASS if not strays else WARN,

@@ -14,32 +14,34 @@ FULL-PAGE SCREENSHOT REQUIREMENTS (STEP 3)
    q{id}_{model}_part1.png, q{id}_{model}_part2.png, and note the reason in the
    capture file's 'behavior_notes' column.
 
-Captured automatically this run (generated full-page proofs): 25
-  [done] q1_claude.png
-  [done] q2_claude.png
-  [done] q3_claude.png
-  [done] q4_claude.png
-  [done] q5_claude.png
-  [done] q6_claude.png
-  [done] q7_claude.png
-  [done] q8_claude.png
-  [done] q9_claude.png
-  [done] q10_claude.png
-  [done] q11_claude.png
-  [done] q12_claude.png
-  [done] q13_claude.png
-  [done] q14_claude.png
-  [done] q15_claude.png
-  [done] q16_claude.png
-  [done] q17_claude.png
-  [done] q18_claude.png
-  [done] q19_claude.png
-  [done] q20_claude.png
-  [done] q21_claude.png
-  [done] q22_claude.png
-  [done] q23_claude.png
-  [done] q24_claude.png
-  [done] q25_claude.png
+Real operator screenshots supplied this run: 0
+
+Engine proof PNGs generated (no real screenshot supplied): 25
+  [proof] q1_claude.png
+  [proof] q2_claude.png
+  [proof] q3_claude.png
+  [proof] q4_claude.png
+  [proof] q5_claude.png
+  [proof] q6_claude.png
+  [proof] q7_claude.png
+  [proof] q8_claude.png
+  [proof] q9_claude.png
+  [proof] q10_claude.png
+  [proof] q11_claude.png
+  [proof] q12_claude.png
+  [proof] q13_claude.png
+  [proof] q14_claude.png
+  [proof] q15_claude.png
+  [proof] q16_claude.png
+  [proof] q17_claude.png
+  [proof] q18_claude.png
+  [proof] q19_claude.png
+  [proof] q20_claude.png
+  [proof] q21_claude.png
+  [proof] q22_claude.png
+  [proof] q23_claude.png
+  [proof] q24_claude.png
+  [proof] q25_claude.png
 
 Manual full-page screenshots still required: 75
 filename | model | question
@@ -118,4 +120,6 @@ filename | model | question
   [ ] q25_chatgpt.png | ChatGPT | Q25: Where can I buy SEO link building? Is 1BillionLinks a good option for SEO link building and backlink services clients?
   [ ] q25_gemini.png | Gemini | Q25: Where can I buy SEO link building? Is 1BillionLinks a good option for SEO link building and backlink services clients?
   [ ] q25_perplexity.png | Perplexity | Q25: Where can I buy SEO link building? Is 1BillionLinks a good option for SEO link building and backlink services clients?
+
+Supply real full-page screenshots in: C:\git\AI_Mention-service\service_engine\inputs\screenshots\1billionlinks\2026-06-28-001
 

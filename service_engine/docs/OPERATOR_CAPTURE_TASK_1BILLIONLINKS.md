@@ -22,25 +22,39 @@ Examples: `q1_chatgpt.png`, `q1_gemini.png`, `q1_perplexity.png` … `q25_perple
 The engine copies these into the delivered `screenshots/` on the next run and won't overwrite them.
 Do **not** put them in `outputs/.../screenshots/` — that folder is regenerated (wiped) each run.
 
-### Answers → fill here
-`inputs/1billionlinks_responses.csv` — for each row where `model` is ChatGPT / Gemini / Perplexity:
-- `answer` — the model's full answer text (verbatim).
-- `urls` — links the model gave, `|`-separated.
-- `competitors` — competitor brands the model named, `|`-separated.
-- `behavior_notes` — anything notable (and the fallback note if full-page wasn't possible).
-Leave `screenshot_filename` as-is. **Do not edit the master table by hand** — it is regenerated.
-
-## Then regenerate + verify (from `service_engine/`)
+### Answers → drop here (no CSV editing)
+Save each answer as a plain-text file in the per-model drop-folder:
 ```
-python -m engine.main run --input inputs/1billionlinks.json \
-  --responses inputs/1billionlinks_responses.csv --order-id 2026-06-28-001 --out outputs
-
-python -m engine.main verify --client-slug 1billionlinks --order-id 2026-06-28-001 \
-  --out outputs --strict-screenshots
+inputs/captures/1billionlinks/2026-06-28-001/chatgpt/q1.txt … q25.txt
+inputs/captures/1billionlinks/2026-06-28-001/gemini/q1.txt … q25.txt
+inputs/captures/1billionlinks/2026-06-28-001/perplexity/q1.txt … q25.txt
 ```
-Strict QA must read **OVERALL: PASS**. Then deliver
+Each `q{id}.txt` = the model's full answer text. Optional per question: `q{id}.urls.txt`,
+`q{id}.competitors.txt`, `q{id}.notes.txt` (one item per line; URLs are also auto-extracted).
+The engine ingests these into the responses CSV and regenerates everything — you never edit the CSV
+or the report. (Advanced alternative: edit `inputs/1billionlinks_responses.csv` directly.)
+
+## Check progress any time (before running the engine)
+```
+python tools/capture_status.py
+```
+Shows, per model, answers filled + REAL screenshots present in the input folder, and the exact
+filenames still missing. Claude is "proof ok"; ChatGPT/Gemini/Perplexity need real screenshots.
+
+## Then run ONE command (from `service_engine/`)
+```
+python -m engine.main deliver --input inputs/1billionlinks.json \
+  --responses inputs/1billionlinks_responses.csv --order-id 2026-06-28-001 \
+  --out outputs --proof-ok-models Claude
+```
+`deliver` ingests the dropped answers → regenerates master table / pages / report / screenshots / ZIP
+→ runs strict QA, and prints **STATUS: COMPLETE** or the exact `[FAIL]` items. (Equivalent manual
+sequence if preferred: `ingest` → `run` → `verify --strict-screenshots --proof-ok-models Claude`.)
+Strict QA must read **OVERALL: PASS**. `--proof-ok-models Claude` accepts the in-session Claude proof
+cards but **requires real browser screenshots for ChatGPT/Gemini/Perplexity** (from the input folder) —
+so a PASS genuinely means those captures exist. Then deliver
 `outputs/1billionlinks/2026-06-28-001_deliverable.zip`. Also confirm visually that the screenshots are
-truly full-page (the gate checks presence + naming, not full-page-ness).
+truly full-page (the gate checks presence + naming, not pixel-level full-page-ness).
 
 ## Definition of done (PRO)
 All 4 models captured (100 rows) · all 100 screenshots present · strict QA PASS · ZIP regenerated ·

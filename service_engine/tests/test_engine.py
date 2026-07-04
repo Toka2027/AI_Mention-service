@@ -8,7 +8,7 @@ from pathlib import Path
 
 import pytest
 
-from engine import extractor, generator, main, pages, report, verify
+from engine import extractor, generator, ingest, main, pages, report, verify
 from engine.models import PACKAGES, RECOMMENDED_INTAKE, ClientInput, Question, ResponseRow
 
 
@@ -346,3 +346,64 @@ def test_write_screenshots_preserves_real_and_renders_proof(tmp_path: Path):
     proof_name = rows[1].screenshot_filename
     assert (shots / proof_name).read_bytes()[:8] == b"\x89PNG\r\n\x1a\n"
     assert made == 2
+
+
+def test_verify_strict_requires_real_screenshots(tmp_path: Path):
+    inp = _write_acme_full(tmp_path)
+    resp = _write_acme_all_captured(tmp_path, inp)  # all answers captured (no pending)
+    out = tmp_path / "outputs"
+    main.run(str(inp), str(resp), str(out), order_id="ord-x")
+
+    # No real screenshots supplied -> strict FAILS on the real-screenshots check
+    # even though the engine generated proof cards and nothing is "pending".
+    res = verify.verify_order(str(out), "Acme Co", "ord-x", strict_screenshots=True,
+                              screenshots_input=str(tmp_path / "no_shots"))
+    rc = next(c for c in res["checks"] if c["name"].startswith("real browser screenshots"))
+    assert rc["status"] == verify.FAIL
+    assert res["overall"] == verify.FAIL
+
+    # Supply real screenshots in the input dir -> the check passes.
+    sin = tmp_path / "shots_in"
+    sin.mkdir()
+    ci = ClientInput.from_json(str(inp))
+    qs = generator.generate_questions(ci, ci.pkg.n_questions)
+    for q in qs:
+        for m in ci.pkg.models:
+            (sin / f"q{q.id}_{m.lower()}.png").write_bytes(b"REAL")
+    res2 = verify.verify_order(str(out), "Acme Co", "ord-x", strict_screenshots=True,
+                               screenshots_input=str(sin))
+    rc2 = next(c for c in res2["checks"] if c["name"].startswith("real browser screenshots"))
+    assert rc2["status"] == verify.PASS
+
+    # proof-ok models are exempt from the real-screenshot requirement.
+    res3 = verify.verify_order(str(out), "Acme Co", "ord-x", strict_screenshots=True,
+                               proof_ok_models={"ChatGPT", "Gemini"},
+                               screenshots_input=str(tmp_path / "no_shots"))
+    rc3 = next(c for c in res3["checks"] if c["name"].startswith("real browser screenshots"))
+    assert rc3["status"] == verify.PASS
+
+
+def test_ingest_captures_fills_answers_and_urls(tmp_path: Path):
+    inp = _write_acme_full(tmp_path)  # BASIC -> ChatGPT, Gemini
+    ci = ClientInput.from_json(str(inp))
+    qs = generator.generate_questions(ci, ci.pkg.n_questions)
+    resp = tmp_path / "resp.csv"
+    report.write_capture_template(generator.build_capture_template(qs, ci.pkg.models), qs, resp)
+
+    cap = tmp_path / "captures"
+    (cap / "chatgpt").mkdir(parents=True)
+    (cap / "chatgpt" / "q1.txt").write_text(
+        "Acme Co is a solid option. See https://acme.example/proof for details.", encoding="utf-8")
+    (cap / "chatgpt" / "q1.competitors.txt").write_text("WidgetCo\nGadgetInc", encoding="utf-8")
+
+    stats = ingest.ingest_captures(ci, qs, str(resp), str(cap))
+    assert stats["ChatGPT"] == 1 and stats["Gemini"] == 0
+
+    rows = extractor.load_responses(str(resp))
+    r = next(x for x in rows if x.question_id == 1 and x.model == "ChatGPT")
+    assert "Acme Co is a solid option" in r.answer
+    assert "https://acme.example/proof" in r.urls          # auto-extracted from the answer
+    assert "WidgetCo" in r.competitors                     # from the optional file
+    # Untouched rows stay pending.
+    g = next(x for x in rows if x.question_id == 1 and x.model == "Gemini")
+    assert not g.is_captured

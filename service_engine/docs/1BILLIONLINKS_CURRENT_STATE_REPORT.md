@@ -60,9 +60,13 @@ No automated API querying was performed; the engine is offline by design. Llama 
 - **Not published** — hosting is a separate manual step (publication helps discovery/crawling only).
 
 ## 8. Screenshots / proof status
-- **25 full-page answer-proof images generated** for the captured Claude answers (`screenshots/`).
-- **75 manual full-page screenshots pending** for ChatGPT/Gemini/Perplexity (list in
-  `screenshots/EXPECTED_FILES.txt`).
+- **25 engine-generated proof cards** for the captured Claude answers (`screenshots/`, labelled
+  `[proof]` in `EXPECTED_FILES.txt`). These are rendered from the captured text, not browser captures.
+- **0 real operator browser screenshots** supplied so far.
+- **75 manual full-page browser screenshots pending** for ChatGPT/Gemini/Perplexity. Save them to the
+  persistent input folder `inputs/screenshots/1billionlinks/2026-06-28-001/` (naming `q{id}_{model}.png`);
+  the engine copies them into the delivered `screenshots/` on the next run without overwriting.
+  See `docs/OPERATOR_CAPTURE_TASK_1BILLIONLINKS.md`. Strict QA currently **FAILS** on this item.
 
 ## 9. Recommendations
 - Capture the 3 pending models to complete the 4-model baseline.
@@ -71,9 +75,11 @@ No automated API querying was performed; the engine is offline by design. Llama 
 - Re-test the same questions on a cycle to track how AI recognition changes over time.
 
 ## 10. Next steps
-1. Perform manual capture for ChatGPT, Gemini, Perplexity (answers + full-page screenshots).
-2. Re-run the engine to refresh the package.
-3. Run the QA gate in strict mode; deliver once it passes.
+1. Perform manual capture for ChatGPT, Gemini, Perplexity (answers + full-page screenshots) — see
+   `docs/OPERATOR_CAPTURE_TASK_1BILLIONLINKS.md`. Answers → `inputs/1billionlinks_responses.csv`;
+   screenshots → `inputs/screenshots/1billionlinks/2026-06-28-001/`.
+2. Re-run the engine to refresh the package (master table, pages, report, screenshots, ZIP).
+3. Run the QA gate in strict mode; deliver only once it reads **OVERALL: PASS**.
 
 ## Deliverable locations
 - Auto-generated PDF (partial baseline): `outputs/1billionlinks/2026-06-28-001/report.pdf`

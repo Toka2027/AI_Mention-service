@@ -14,7 +14,7 @@ import shutil
 import sys
 from pathlib import Path
 
-from . import extractor, generator, pages, report, verify
+from . import extractor, generator, ingest, pages, report, verify
 from .models import ClientInput, Question, ResponseRow
 
 
@@ -162,6 +162,46 @@ def run(input_path: str, responses_path: str | None, out_root: str, order_id: st
     return out_dir
 
 
+def _order_ident(input_path: str, order_id: str | None):
+    ci = ClientInput.from_json(input_path)
+    slug = ci.client_slug or pages.slugify(ci.brand)
+    oid = pages.slugify(order_id or ci.order_id or "order-001")
+    inputs_root = Path(input_path).resolve().parent
+    return ci, slug, oid, inputs_root
+
+
+def ingest_only(input_path: str, responses_path: str, order_id: str | None, captures_dir: str | None) -> dict:
+    ci, slug, oid, inputs_root = _order_ident(input_path, order_id)
+    captures = captures_dir or (inputs_root / "captures" / slug / oid)
+    questions = generator.generate_questions(ci, ci.pkg.n_questions)
+    stats = ingest.ingest_captures(ci, questions, responses_path, captures)
+    print(f"INGEST  from {captures}")
+    print("        " + ", ".join(f"{m}: +{n}" for m, n in stats.items()))
+    return stats
+
+
+def deliver(input_path: str, responses_path: str, out_root: str, order_id: str | None,
+            captures_dir: str | None = None, proof_ok_models: set[str] | None = None) -> dict:
+    """End-to-end: ingest dropped answers -> regenerate the whole package -> strict QA.
+    The operator only supplies raw answers + screenshots; the engine does the rest."""
+    ci, slug, oid, inputs_root = _order_ident(input_path, order_id)
+    ingest_only(input_path, responses_path, order_id, captures_dir)
+    print()
+    run(input_path, responses_path, out_root, order_id)
+    print()
+    result = verify.verify_order(
+        out_root, slug, oid, strict_screenshots=True,
+        proof_ok_models=proof_ok_models or set(),
+        screenshots_input=str(inputs_root / "screenshots" / slug / oid),
+    )
+    print(verify.format_report(result))
+    zip_path = Path(out_root) / slug / f"{oid}_deliverable.zip"
+    print(f"\nZIP: {zip_path}")
+    print("STATUS: " + ("COMPLETE (strict QA PASS)" if result["overall"] != verify.FAIL
+                        else "NOT COMPLETE - strict QA did not pass (see [FAIL] above)"))
+    return result
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="engine",
@@ -188,6 +228,29 @@ def build_parser() -> argparse.ArgumentParser:
                           help="Minimum acceptable intake completeness (default: 8).")
     verify_p.add_argument("--strict-screenshots", dest="strict_screenshots", action="store_true",
                           help="Treat missing manual full-page screenshots as a FAIL (not a WARN).")
+    verify_p.add_argument("--proof-ok-models", dest="proof_ok_models", default="",
+                          help="Comma list of models allowed to use an engine proof card instead of a "
+                          "real browser screenshot (e.g. 'Claude'). Only affects --strict-screenshots.")
+    verify_p.add_argument("--screenshots-input", dest="screenshots_input", default=None,
+                          help="Persistent real-screenshots input dir (default: inputs/screenshots/<slug>/<order>).")
+
+    ingest_p = sub.add_parser("ingest", help="Merge dropped per-model answer files into the responses CSV.")
+    ingest_p.add_argument("--input", required=True, help="Path to client input JSON.")
+    ingest_p.add_argument("--responses", required=True, help="Responses CSV to update (created if absent).")
+    ingest_p.add_argument("--order-id", dest="order_id", default=None, help="Order id.")
+    ingest_p.add_argument("--captures", default=None,
+                          help="Drop-folder (default: inputs/captures/<slug>/<order>).")
+
+    deliver_p = sub.add_parser(
+        "deliver", help="End-to-end: ingest dropped answers -> regenerate package -> strict QA.")
+    deliver_p.add_argument("--input", required=True, help="Path to client input JSON.")
+    deliver_p.add_argument("--responses", required=True, help="Responses CSV (updated by ingest).")
+    deliver_p.add_argument("--order-id", dest="order_id", default=None, help="Order id.")
+    deliver_p.add_argument("--out", default="outputs", help="Output root directory (default: outputs).")
+    deliver_p.add_argument("--captures", default=None,
+                           help="Drop-folder (default: inputs/captures/<slug>/<order>).")
+    deliver_p.add_argument("--proof-ok-models", dest="proof_ok_models", default="",
+                           help="Models allowed to use an engine proof card (e.g. 'Claude').")
     return parser
 
 
@@ -200,12 +263,29 @@ def main(argv: list[str] | None = None) -> int:
             print(f"ERROR: {exc}", file=sys.stderr)
             return 1
     elif args.command == "verify":
+        proof_ok = {m.strip() for m in (args.proof_ok_models or "").split(",") if m.strip()}
         result = verify.verify_order(
             args.out, args.client_slug, args.order_id,
             min_intake=args.min_intake, strict_screenshots=args.strict_screenshots,
+            proof_ok_models=proof_ok, screenshots_input=args.screenshots_input,
         )
         print(verify.format_report(result))
         return 1 if result["overall"] == verify.FAIL else 0
+    elif args.command == "ingest":
+        try:
+            ingest_only(args.input, args.responses, args.order_id, args.captures)
+        except (ValueError, FileNotFoundError) as exc:
+            print(f"ERROR: {exc}", file=sys.stderr)
+            return 1
+    elif args.command == "deliver":
+        try:
+            proof_ok = {m.strip() for m in (args.proof_ok_models or "").split(",") if m.strip()}
+            result = deliver(args.input, args.responses, args.out, args.order_id,
+                             captures_dir=args.captures, proof_ok_models=proof_ok)
+            return 1 if result["overall"] == verify.FAIL else 0
+        except (ValueError, FileNotFoundError) as exc:
+            print(f"ERROR: {exc}", file=sys.stderr)
+            return 1
     return 0
 
 
