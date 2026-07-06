@@ -11,6 +11,8 @@ python -m engine.main verify --client-slug <slug> --order-id <order-id> --out ou
 python -m engine.main verify --client-slug <slug> --order-id <order-id> --strict-screenshots
 # require REAL browser screenshots for all captured models except in-session proofs (e.g. Claude):
 python -m engine.main verify --client-slug <slug> --order-id <order-id> --strict-screenshots --proof-ok-models Claude
+# also require REAL browser/operator EVIDENCE (rejects proof/api/none) for named models:
+python -m engine.main verify --client-slug <slug> --order-id <order-id> --strict-screenshots --proof-ok-models Claude --require-evidence ChatGPT,Gemini,Perplexity
 ```
 - Exit code **0** = no FAIL (PASS or WARN). Exit code **1** = at least one FAIL → **do not deliver**.
 - `--min-intake N` sets the acceptable intake completeness (default 8).
@@ -32,6 +34,7 @@ python -m engine.main verify --client-slug <slug> --order-id <order-id> --strict
 | Captured-answer screenshots present | FAIL |
 | Manual full-page screenshots present | WARN (FAIL with `--strict-screenshots`) |
 | Real browser screenshots for required models (not proof-ok) | FAIL in `--strict-screenshots` |
+| Evidence provenance for `--require-evidence` models (must be `browser`/`operator`) | FAIL (proof/api/none/model-authored rejected) |
 | Screenshot naming `q{id}_{model}.png` | WARN |
 | Full-page rules + fallback documented | WARN |
 | Client-safe wording (no banned promises) | FAIL |

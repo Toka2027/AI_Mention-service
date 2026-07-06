@@ -77,6 +77,7 @@ def verify_order(
     strict_screenshots: bool = False,
     proof_ok_models: set[str] | None = None,
     screenshots_input: str | None = None,
+    require_evidence: set[str] | None = None,
 ) -> dict:
     slug = slugify(client_slug)
     oid = slugify(order_id)
@@ -205,6 +206,24 @@ def verify_order(
              else f"missing {len(missing_real)} real screenshot(s) in {sin}: "
                   f"{missing_real[:5]}{'...' if len(missing_real) > 5 else ''} "
                   f"(proof-ok models: {sorted(proof_ok) or 'none'})")
+
+    # Evidence provenance: required models must be real captures (browser/operator),
+    # not engine proof cards, API text, or unknown provenance.
+    if require_evidence:
+        req = {m.lower() for m in require_evidence}
+        accepted = {"browser", "operator"}
+        bad = []
+        for r in m_rows:
+            if (r.get("model") or "").lower() not in req:
+                continue
+            et = (r.get("evidence_type") or "").lower()
+            captured = (r.get("answer_excerpt") or "") != ResponseRow.PENDING
+            if not captured or et not in accepted:
+                bad.append(f"q{r['question_id']}_{(r.get('model') or '').lower()}={et or 'none'}")
+        _add(checks, "evidence provenance (required models)",
+             PASS if not bad else FAIL,
+             f"all real (browser/operator) for {sorted(req)}" if not bad
+             else f"{len(bad)} row(s) not real browser/operator: {bad[:5]}{'...' if len(bad) > 5 else ''}")
 
     strays = [n for n in pngs if not _PNG_RE.match(n)]
     _add(checks, "screenshot naming", PASS if not strays else WARN,

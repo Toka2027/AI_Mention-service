@@ -21,7 +21,7 @@
     },
     {
       "path": "master_table.csv",
-      "bytes": 33343
+      "bytes": 34357
     },
     {
       "path": "order_brief.md",
@@ -89,11 +89,11 @@
     },
     {
       "path": "report.pdf",
-      "bytes": 4209
+      "bytes": 4543
     },
     {
       "path": "responses_template.csv",
-      "bytes": 17442
+      "bytes": 17556
     },
     {
       "path": "screenshots/EXPECTED_FILES.txt",

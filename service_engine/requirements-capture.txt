@@ -1,0 +1,4 @@
+# Optional dependency for the real browser-capture layer (engine/capture/).
+# The core engine does NOT need this; only `engine.main capture` (browser mode) does.
+# After install, run:  playwright install chromium
+playwright>=1.40

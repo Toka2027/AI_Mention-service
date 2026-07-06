@@ -407,3 +407,66 @@ def test_ingest_captures_fills_answers_and_urls(tmp_path: Path):
     # Untouched rows stay pending.
     g = next(x for x in rows if x.question_id == 1 and x.model == "Gemini")
     assert not g.is_captured
+
+
+def test_evidence_type_roundtrip_and_master(tmp_path: Path):
+    inp = _write_acme_full(tmp_path)
+    ci = ClientInput.from_json(str(inp))
+    qs = generator.generate_questions(ci, ci.pkg.n_questions)
+    resp = tmp_path / "resp.csv"
+    report.write_capture_template(generator.build_capture_template(qs, ci.pkg.models), qs, resp)
+
+    cap = tmp_path / "captures"
+    (cap / "chatgpt").mkdir(parents=True)
+    (cap / "chatgpt" / "q1.txt").write_text("Answer with https://x.example.", encoding="utf-8")
+    (cap / "chatgpt" / "q1.evidence.txt").write_text("browser", encoding="utf-8")  # browser runner marker
+    (cap / "gemini").mkdir(parents=True)
+    (cap / "gemini" / "q1.txt").write_text("Gemini answer.", encoding="utf-8")     # no marker -> operator
+
+    ingest.ingest_captures(ci, qs, str(resp), str(cap))
+    rows = extractor.load_responses(str(resp))
+    ev = {(r.question_id, r.model): r.evidence_type for r in rows}
+    assert ev[(1, "ChatGPT")] == "browser"
+    assert ev[(1, "Gemini")] == "operator"
+    table = extractor.build_master_table(qs, rows, ci)
+    assert any(t["evidence_type"] == "browser" for t in table)
+    # pending rows report evidence 'none'
+    assert any(t["evidence_type"] == "none" for t in table)
+
+
+def test_verify_require_evidence_gate(tmp_path: Path):
+    inp = _write_acme_full(tmp_path)
+    ci = ClientInput.from_json(str(inp))
+    qs = generator.generate_questions(ci, ci.pkg.n_questions)
+    rows = generator.build_capture_template(qs, ci.pkg.models)
+    for r in rows:
+        r.answer = f"answer q{r.question_id} {r.model}"
+        r.evidence_type = "proof"           # captured but NOT a real browser/operator capture
+    resp = tmp_path / "resp.csv"
+    report.write_capture_template(rows, qs, resp)
+    out = tmp_path / "outputs"
+    main.run(str(inp), str(resp), str(out), order_id="ord-x")
+
+    # proof evidence -> evidence gate FAILS (proof_ok isolates the real-screenshot check)
+    res = verify.verify_order(str(out), "Acme Co", "ord-x", strict_screenshots=True,
+                              proof_ok_models={"ChatGPT", "Gemini"},
+                              screenshots_input=str(tmp_path / "noshots"),
+                              require_evidence={"ChatGPT", "Gemini"})
+    ec = next(c for c in res["checks"] if c["name"].startswith("evidence provenance"))
+    assert ec["status"] == verify.FAIL
+
+    # real browser evidence + real screenshots -> PASS
+    for r in rows:
+        r.evidence_type = "browser"
+    report.write_capture_template(rows, qs, resp)
+    main.run(str(inp), str(resp), str(out), order_id="ord-x")
+    sin = tmp_path / "shots_in"
+    sin.mkdir()
+    for q in qs:
+        for m in ci.pkg.models:
+            (sin / f"q{q.id}_{m.lower()}.png").write_bytes(b"REAL")
+    res2 = verify.verify_order(str(out), "Acme Co", "ord-x", strict_screenshots=True,
+                               screenshots_input=str(sin), require_evidence={"ChatGPT", "Gemini"})
+    ec2 = next(c for c in res2["checks"] if c["name"].startswith("evidence provenance"))
+    assert ec2["status"] == verify.PASS
+    assert res2["overall"] == verify.PASS

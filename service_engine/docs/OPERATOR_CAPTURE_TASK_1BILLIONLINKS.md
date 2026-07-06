@@ -41,15 +41,24 @@ python tools/capture_status.py
 Shows, per model, answers filled + REAL screenshots present in the input folder, and the exact
 filenames still missing. Claude is "proof ok"; ChatGPT/Gemini/Perplexity need real screenshots.
 
+## Automated browser capture (preferred; operator machine)
+Instead of hand-saving files, run the real-capture layer (Playwright, you log in manually):
+```
+python -m engine.main capture --input inputs/1billionlinks.json --order-id 2026-06-28-001 \
+  --models chatgpt,gemini,perplexity --headful --login-wait
+```
+It submits each question, you confirm when the answer is done, and it saves the real answer text +
+real full-page screenshot to the correct paths (evidence=`browser`). See `docs/CAPTURE_BROWSER_AUTOMATION.md`.
+
 ## Then run ONE command (from `service_engine/`)
 ```
 python -m engine.main deliver --input inputs/1billionlinks.json \
   --responses inputs/1billionlinks_responses.csv --order-id 2026-06-28-001 \
-  --out outputs --proof-ok-models Claude
+  --out outputs --proof-ok-models Claude --require-evidence ChatGPT,Gemini,Perplexity
 ```
-`deliver` ingests the dropped answers → regenerates master table / pages / report / screenshots / ZIP
-→ runs strict QA, and prints **STATUS: COMPLETE** or the exact `[FAIL]` items. (Equivalent manual
-sequence if preferred: `ingest` → `run` → `verify --strict-screenshots --proof-ok-models Claude`.)
+`deliver` ingests the captures → regenerates master table / pages / report / screenshots / ZIP → runs
+strict QA (real screenshots **and** real `browser`/`operator` evidence required for ChatGPT/Gemini/
+Perplexity), and prints **STATUS: COMPLETE** or the exact `[FAIL]` items.
 Strict QA must read **OVERALL: PASS**. `--proof-ok-models Claude` accepts the in-session Claude proof
 cards but **requires real browser screenshots for ChatGPT/Gemini/Perplexity** (from the input folder) —
 so a PASS genuinely means those captures exist. Then deliver

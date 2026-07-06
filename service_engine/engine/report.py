@@ -61,6 +61,7 @@ def write_capture_template(rows: list[ResponseRow], questions: list[Question], p
                     "competitors": " | ".join(r.competitors),
                     "screenshot_filename": r.screenshot_filename,
                     "behavior_notes": r.behavior_notes,
+                    "evidence_type": r.evidence_type,
                 }
             )
 
@@ -177,6 +178,18 @@ def _recommendations(stats: dict, comp_freq: "OrderedDict[str, int]") -> list[st
     return recs
 
 
+def _evidence_summary(master_table: list[dict]) -> "OrderedDict[str, OrderedDict[str, int]]":
+    """Per model -> ordered {evidence_type: count} over captured rows."""
+    out: "OrderedDict[str, OrderedDict[str, int]]" = OrderedDict()
+    for r in master_table:
+        if r["answer_excerpt"] == ResponseRow.PENDING:
+            continue
+        et = r.get("evidence_type") or "unknown"
+        out.setdefault(r["model"], OrderedDict())
+        out[r["model"]][et] = out[r["model"]].get(et, 0) + 1
+    return out
+
+
 # --- PDF report --------------------------------------------------------------
 
 def render_pdf_report(
@@ -274,19 +287,36 @@ def render_pdf_report(
     else:
         body("The brand did not explicitly appear in any captured answer (baseline state).")
 
+    # Evidence & provenance
+    h2("6. Evidence & provenance")
+    body(
+        "Each captured answer is labelled by how it was obtained. 'browser' = real browser UI capture "
+        "with a full-page screenshot; 'operator' = human-in-the-loop capture; 'api' = official model "
+        "API (answer text only, not UI proof); 'proof' = engine-generated proof card (not a real "
+        "external capture); 'model-authored-insession' = text authored by the assistant in a build "
+        "session (not a queried UI/API)."
+    )
+    ev = _evidence_summary(master_table)
+    if ev:
+        for model in sorted(ev):
+            parts = ", ".join(f"{et}: {n}" for et, n in ev[model].items())
+            bullet(f"{model}: {parts}")
+    else:
+        body("No answers captured yet.")
+
     # Recommendations
-    h2("6. Recommendations for future prompts")
+    h2("7. Recommendations for future prompts")
     for rec in _recommendations(stats, comp_freq):
         bullet(rec)
 
     # Methodology
-    h2("7. Methodology & notes")
+    h2("8. Methodology & notes")
     body(
         "Questions are generated from the documented brand-focused templates (brand + keyword + "
-        "niche context). AI answers are captured manually by the delivery team (STEP 3); for this "
-        "report, Claude answers were captured directly. URLs are auto-extracted from answers; "
-        "competitors are recorded from the captured answers. Brand appearance is a literal "
-        "case-insensitive match of the brand and its variations."
+        "niche context). AI answers are captured by the delivery team (STEP 3) and labelled by "
+        "provenance (see Evidence & provenance). URLs are auto-extracted from answers; competitors "
+        "are recorded from the captured answers. Brand appearance is a literal case-insensitive match "
+        "of the brand and its variations."
     )
     body(
         "Scope & disclaimer: this is an AI visibility baseline and brand/entity association review. "

@@ -237,6 +237,14 @@ class ResponseRow:
     competitors: list[str] = field(default_factory=list)
     screenshot_filename: str = ""
     behavior_notes: str = ""
+    # Provenance of this answer: how it was captured.
+    #   browser  = real browser UI capture (with a full-page screenshot)
+    #   operator = human-in-the-loop capture (operator sent + captured)
+    #   api      = official model API (answer text only, no UI screenshot)
+    #   proof    = engine-generated proof card (NOT a real external capture)
+    #   model-authored-insession = text authored by the assistant in a build session
+    #   "" / none = unknown / not captured
+    evidence_type: str = ""
 
     PENDING = "[pending capture]"
 

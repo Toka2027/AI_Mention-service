@@ -24,6 +24,7 @@ CAPTURE_FIELDS = [
     "competitors",
     "screenshot_filename",
     "behavior_notes",
+    "evidence_type",
 ]
 
 MASTER_FIELDS = [
@@ -36,6 +37,7 @@ MASTER_FIELDS = [
     "urls_extracted",
     "competitors_mentioned",
     "brand_appeared",
+    "evidence_type",
     "notes",
 ]
 
@@ -95,6 +97,7 @@ def load_responses(path: str | Path) -> list[ResponseRow]:
                     competitors=_split_pipe(raw.get("competitors") or ""),
                     screenshot_filename=(raw.get("screenshot_filename") or "").strip(),
                     behavior_notes=(raw.get("behavior_notes") or "").strip(),
+                    evidence_type=(raw.get("evidence_type") or "").strip(),
                 )
             )
     return rows
@@ -136,6 +139,7 @@ def build_master_table(
                 "urls_extracted": " | ".join(r.urls),
                 "competitors_mentioned": " | ".join(r.competitors),
                 "brand_appeared": brand_flag,
+                "evidence_type": r.evidence_type if r.is_captured else "none",
                 "notes": r.behavior_notes,
             }
         )

@@ -181,7 +181,8 @@ def ingest_only(input_path: str, responses_path: str, order_id: str | None, capt
 
 
 def deliver(input_path: str, responses_path: str, out_root: str, order_id: str | None,
-            captures_dir: str | None = None, proof_ok_models: set[str] | None = None) -> dict:
+            captures_dir: str | None = None, proof_ok_models: set[str] | None = None,
+            require_evidence: set[str] | None = None) -> dict:
     """End-to-end: ingest dropped answers -> regenerate the whole package -> strict QA.
     The operator only supplies raw answers + screenshots; the engine does the rest."""
     ci, slug, oid, inputs_root = _order_ident(input_path, order_id)
@@ -193,6 +194,7 @@ def deliver(input_path: str, responses_path: str, out_root: str, order_id: str |
         out_root, slug, oid, strict_screenshots=True,
         proof_ok_models=proof_ok_models or set(),
         screenshots_input=str(inputs_root / "screenshots" / slug / oid),
+        require_evidence=require_evidence or set(),
     )
     print(verify.format_report(result))
     zip_path = Path(out_root) / slug / f"{oid}_deliverable.zip"
@@ -233,6 +235,9 @@ def build_parser() -> argparse.ArgumentParser:
                           "real browser screenshot (e.g. 'Claude'). Only affects --strict-screenshots.")
     verify_p.add_argument("--screenshots-input", dest="screenshots_input", default=None,
                           help="Persistent real-screenshots input dir (default: inputs/screenshots/<slug>/<order>).")
+    verify_p.add_argument("--require-evidence", dest="require_evidence", default="",
+                          help="Comma list of models that MUST be real captures (evidence browser/operator), "
+                          "e.g. 'ChatGPT,Gemini,Perplexity'. Fails proof/api/none for those models.")
 
     ingest_p = sub.add_parser("ingest", help="Merge dropped per-model answer files into the responses CSV.")
     ingest_p.add_argument("--input", required=True, help="Path to client input JSON.")
@@ -251,6 +256,23 @@ def build_parser() -> argparse.ArgumentParser:
                            help="Drop-folder (default: inputs/captures/<slug>/<order>).")
     deliver_p.add_argument("--proof-ok-models", dest="proof_ok_models", default="",
                            help="Models allowed to use an engine proof card (e.g. 'Claude').")
+    deliver_p.add_argument("--require-evidence", dest="require_evidence", default="",
+                           help="Models that MUST be real captures (evidence browser/operator).")
+
+    capture_p = sub.add_parser(
+        "capture", help="Real browser capture (Playwright, human-in-the-loop). Operator environment.")
+    capture_p.add_argument("--input", required=True, help="Path to client input JSON.")
+    capture_p.add_argument("--order-id", dest="order_id", default=None, help="Order id.")
+    capture_p.add_argument("--models", default="", help="Comma list, e.g. chatgpt,gemini,perplexity.")
+    capture_p.add_argument("--captures", default=None, help="Drop-folder (default inputs/captures/<slug>/<order>).")
+    capture_p.add_argument("--shots", default=None, help="Screenshots dir (default inputs/screenshots/<slug>/<order>).")
+    capture_p.add_argument("--questions", default=None, help="Question range, e.g. 1-25 (default: all).")
+    capture_p.add_argument("--headful", action="store_true", help="Show the browser window (recommended).")
+    capture_p.add_argument("--login-wait", dest="login_wait", action="store_true",
+                           help="Pause for manual login on first navigation to each model.")
+    capture_p.add_argument("--resume", action="store_true", help="Skip questions already captured.")
+    capture_p.add_argument("--prepare-only", dest="prepare_only", action="store_true",
+                           help="Only write per-question prompt files (no browser).")
     return parser
 
 
@@ -264,10 +286,12 @@ def main(argv: list[str] | None = None) -> int:
             return 1
     elif args.command == "verify":
         proof_ok = {m.strip() for m in (args.proof_ok_models or "").split(",") if m.strip()}
+        require_ev = {m.strip() for m in (args.require_evidence or "").split(",") if m.strip()}
         result = verify.verify_order(
             args.out, args.client_slug, args.order_id,
             min_intake=args.min_intake, strict_screenshots=args.strict_screenshots,
             proof_ok_models=proof_ok, screenshots_input=args.screenshots_input,
+            require_evidence=require_ev,
         )
         print(verify.format_report(result))
         return 1 if result["overall"] == verify.FAIL else 0
@@ -280,9 +304,24 @@ def main(argv: list[str] | None = None) -> int:
     elif args.command == "deliver":
         try:
             proof_ok = {m.strip() for m in (args.proof_ok_models or "").split(",") if m.strip()}
+            require_ev = {m.strip() for m in (args.require_evidence or "").split(",") if m.strip()}
             result = deliver(args.input, args.responses, args.out, args.order_id,
-                             captures_dir=args.captures, proof_ok_models=proof_ok)
+                             captures_dir=args.captures, proof_ok_models=proof_ok,
+                             require_evidence=require_ev)
             return 1 if result["overall"] == verify.FAIL else 0
+        except (ValueError, FileNotFoundError) as exc:
+            print(f"ERROR: {exc}", file=sys.stderr)
+            return 1
+    elif args.command == "capture":
+        from .capture.runner import run_capture  # lazy: avoids importing playwright unless used
+        try:
+            models = [m.strip() for m in (args.models or "").split(",") if m.strip()]
+            return run_capture(
+                input_path=args.input, order_id=args.order_id, models=models,
+                captures_dir=args.captures, shots_dir=args.shots, questions_range=args.questions,
+                headful=args.headful, login_wait=args.login_wait, resume=args.resume,
+                prepare_only=args.prepare_only,
+            )
         except (ValueError, FileNotFoundError) as exc:
             print(f"ERROR: {exc}", file=sys.stderr)
             return 1

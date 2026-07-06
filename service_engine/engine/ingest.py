@@ -76,7 +76,25 @@ def ingest_captures(
             notes = _read(mdir / f"q{q.id}.notes.txt")
             if notes:
                 row.behavior_notes = notes
+            # Provenance: a browser runner writes q{id}.evidence.txt (=browser); a human
+            # dropping files without one is treated as operator-assisted capture.
+            ev = _read(mdir / f"q{q.id}.evidence.txt").lower()
+            row.evidence_type = ev if ev else "operator"
             stats[model] += 1
 
     report.write_capture_template(rows, questions, rp)
     return stats
+
+
+def write_prompt_packet(ci: ClientInput, questions: list[Question], captures_dir: str | Path) -> int:
+    """Write one prompt file per question per model into the drop-folder, so the
+    operator/browser-runner has the exact prompt to submit. Returns files written."""
+    captures = Path(captures_dir)
+    written = 0
+    for model in ci.pkg.models:
+        mdir = captures / model.lower()
+        mdir.mkdir(parents=True, exist_ok=True)
+        for q in questions:
+            (mdir / f"q{q.id}.prompt.txt").write_text(q.text, encoding="utf-8")
+            written += 1
+    return written
