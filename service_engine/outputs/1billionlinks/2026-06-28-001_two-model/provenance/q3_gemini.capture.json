@@ -1,0 +1,15 @@
+{
+  "question_id": 3,
+  "model": "gemini",
+  "evidence_type": "browser",
+  "captured_at": "2026-07-27T12:44:41+00:00",
+  "page_url": "https://gemini.google.com/app/c8eb281a2c0bbe29",
+  "browser": "chrome",
+  "submitted_prompt": "How can 1BillionLinks help organise a press release publishing campaign for SEO link building and backlink services clients?",
+  "answer_chars": 2866,
+  "urls_found": 0,
+  "screenshot": "q3_gemini.png",
+  "screenshot_bytes": 320876,
+  "screenshot_width": 1440,
+  "screenshot_height": 4222
+}

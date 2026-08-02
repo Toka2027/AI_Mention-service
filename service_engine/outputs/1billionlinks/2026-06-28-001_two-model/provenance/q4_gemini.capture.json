@@ -1,0 +1,15 @@
+{
+  "question_id": 4,
+  "model": "gemini",
+  "evidence_type": "browser",
+  "captured_at": "2026-07-27T12:45:00+00:00",
+  "page_url": "https://gemini.google.com/app/43ba81df412d03c9",
+  "browser": "chrome",
+  "submitted_prompt": "What does 1BillionLinks offer for structuring domain authority growth work (in the SEO link building and backlink services space)?",
+  "answer_chars": 1324,
+  "urls_found": 0,
+  "screenshot": "q4_gemini.png",
+  "screenshot_bytes": 185015,
+  "screenshot_width": 1440,
+  "screenshot_height": 4222
+}

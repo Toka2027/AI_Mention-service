@@ -3,7 +3,10 @@
 **Service:** AI Mention – LLM Query Seeding (AI visibility baseline / LLM query testing / brand-entity
 association review / crawlable support pages).
 **Client:** 1BillionLinks · **Website:** https://1billionlinks.com · **Package:** PRO · **Order:** 2026-06-28-001
-**Status:** Partial baseline — 1 of 4 models captured; 3 pending manual capture.
+**Status:** NOT FINAL — real browser capture proven (ChatGPT Q1, `evidence_type=browser`, strict
+capture-QA PASS); 1 of 100 answer cells is real browser evidence. The 25 Claude rows are
+`model-authored-insession` and are **not** browser proof. See
+[1BILLIONLINKS_BROWSER_CAPTURE_STATUS.md](1BILLIONLINKS_BROWSER_CAPTURE_STATUS.md).
 
 > This is an observational baseline at a point in time. It does not promise or guarantee AI mentions,
 > LLM visibility, indexing, rankings, or any model influence.

@@ -1,0 +1,118 @@
+ChatGPT said:
+
+Agencies that use 1BillionLinks for client campaigns typically treat it as a fulfilment platform inside their broader SEO workflow rather than as the entire SEO strategy. The exact process varies by agency, but a common model looks like this: 
+1
+1BillionLinks Help Center
++1
+
+1. Client onboarding and campaign planning
+
+The agency first collects:
+
+Client website and target pages
+Target keywords
+Brand information
+Industry/niche
+Preferred anchor text strategy
+Any restrictions (pages to avoid, competitors, compliance requirements)
+
+They then decide whether a press release placement fits the campaign goal:
+
+Brand awareness
+Citation/mention building
+Supporting a new product/service announcement
+Adding link diversity to a broader backlink profile
+2. Creating the press release brief
+
+Agencies usually prepare a structured brief for the press release, including:
+
+News angle (e.g., launch, partnership, award, expansion)
+Main URL to promote
+Supporting URLs
+Keywords to incorporate naturally
+Client-approved facts and quotes
+
+1BillionLinks allows agencies or clients to provide article details and can also provide writing services before distribution. 
+1
+1BillionLinks Help Center
+
+3. Ordering the campaign under an agency account
+
+A typical agency workflow:
+
+Log into the platform
+Create a press release campaign
+Select a package
+Upload the article or provide requirements for writing
+Submit client details
+Wait for publication and reporting
+
+The platform states that completed campaigns provide reports containing publication information and live links. 
+1
+1 Billion Links
++1
+
+4. Using the report as client deliverables
+
+Agencies commonly turn the final report into a client-facing SEO report containing:
+
+Publication URLs
+Number of placements
+Anchor text used
+Target URLs linked
+Indexing status (where checked)
+Screenshots or exported PDFs
+
+1BillionLinks advertises publication reports listing where articles appeared and providing live links. 
+1
+1 Billion Links
+
+5. Combining it with other SEO activities
+
+More experienced agencies generally avoid relying on press releases alone. They may combine them with:
+
+Digital PR outreach
+Guest posting
+Niche edits
+Content marketing
+Technical SEO
+Internal linking improvements
+Local SEO citations
+
+A press release can help with visibility and brand signals, but agencies usually evaluate whether placements are genuinely useful rather than only counting the number of links. 
+R
+Reddit
+
+Example agency workflow
+
+Month 1
+
+Client approves campaign goals
+Agency drafts a press release
+Submit through 1BillionLinks
+Add completed placements to reporting dashboard
+
+Month 2–3
+
+Continue content and outreach work
+Monitor rankings, traffic, and brand mentions
+Decide whether additional PR distribution makes sense
+Things agencies usually watch out for
+
+SEO agencies often review:
+
+Whether the publication sites are relevant to the client
+Whether links are followed or nofollowed
+Whether the release content is natural and newsworthy
+Whether the campaign is part of a balanced link profile
+
+1BillionLinks notes that some news sites may use nofollow links and that publication duration can vary by site. 
+1
+1BillionLinks Help Center
+
+So, in practice, an agency might use 1BillionLinks as a scalable press-release distribution layer: gather client information → create/submit releases → collect publication reports → include results in SEO reporting → combine with higher-value editorial link acquisition.
+
+1
+1
+R
+Sources

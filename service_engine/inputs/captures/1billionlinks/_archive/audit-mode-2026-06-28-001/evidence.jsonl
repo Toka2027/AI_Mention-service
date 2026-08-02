@@ -1,0 +1,4 @@
+{"model": "chatgpt", "q": 1, "ok": false, "notes": "no answer text: either generation timed out (240s) or selector 'answer' (\"[data-message-author-role='assistant']\") needs updating", "captured_at": ""}
+{"model": "chatgpt", "q": 1, "ok": false, "notes": "no answer text: either generation timed out (240s) or selector 'answer' (\"div[data-assistant-markdown], [data-message-author-role='assistant'], [data-message-role='assistant']\") needs updating", "captured_at": ""}
+{"model": "chatgpt", "q": 1, "ok": true, "notes": "", "captured_at": "2026-07-27T11:02:54+00:00"}
+{"model": "chatgpt", "q": 1, "ok": true, "notes": "", "captured_at": "2026-07-27T11:04:13+00:00"}

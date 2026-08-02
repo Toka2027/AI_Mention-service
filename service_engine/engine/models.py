@@ -97,6 +97,9 @@ class ClientInput:
     # --- operational identifiers ---
     order_id: str = ""
     client_slug: str = ""
+    # Which question set to generate: 'benefit' (feature/use-case led, default) or
+    # 'audit' (evaluative reputation questions). See engine/generator.py.
+    query_mode: str = ""
     # --- recommended intake (warn if missing) ---
     brand_variations: list[str] = field(default_factory=list)
     country: str = ""
@@ -138,6 +141,7 @@ class ClientInput:
             package=_as_str(data.get("package")).upper(),
             order_id=_as_str(data.get("order_id")),
             client_slug=_as_str(data.get("client_slug")),
+            query_mode=_as_str(data.get("query_mode")).lower(),
             brand_variations=_as_list(data.get("brand_variations")),
             country=_as_str(data.get("country")),
             language=_as_str(data.get("language")),

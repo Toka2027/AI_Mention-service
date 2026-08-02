@@ -1,0 +1,15 @@
+{
+  "question_id": 4,
+  "model": "gemini",
+  "evidence_type": "browser",
+  "captured_at": "2026-07-27T12:03:11+00:00",
+  "page_url": "https://gemini.google.com/app/332a91fdb5cb4656",
+  "browser": "chrome",
+  "submitted_prompt": "How does 1BillionLinks support planning for domain authority (in the SEO link building and backlink services space)?",
+  "answer_chars": 2335,
+  "urls_found": 0,
+  "screenshot": "q4_gemini.png",
+  "screenshot_bytes": 273044,
+  "screenshot_width": 1440,
+  "screenshot_height": 4222
+}

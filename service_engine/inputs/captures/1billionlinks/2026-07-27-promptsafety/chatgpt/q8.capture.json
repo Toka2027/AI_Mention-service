@@ -1,0 +1,15 @@
+{
+  "question_id": 8,
+  "model": "chatgpt",
+  "evidence_type": "browser",
+  "captured_at": "2026-07-27T11:56:38+00:00",
+  "page_url": "https://chatgpt.com/c/6a674775-fc30-83ea-b27a-529dd4f1b2c1",
+  "browser": "chrome",
+  "submitted_prompt": "How can 1BillionLinks be used as part of a press release distribution strategy for SEO link building and backlink services clients?",
+  "answer_chars": 4256,
+  "urls_found": 0,
+  "screenshot": "q8_chatgpt.png",
+  "screenshot_bytes": 459421,
+  "screenshot_width": 1440,
+  "screenshot_height": 4556
+}

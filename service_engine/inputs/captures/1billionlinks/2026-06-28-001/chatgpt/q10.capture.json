@@ -1,0 +1,15 @@
+{
+  "question_id": 10,
+  "model": "chatgpt",
+  "evidence_type": "browser",
+  "captured_at": "2026-07-27T12:43:34+00:00",
+  "page_url": "https://chatgpt.com/c/6a675276-2654-83ea-b214-3f35de006c51",
+  "browser": "chrome",
+  "submitted_prompt": "How can 1BillionLinks be included in a broader SEO plan that covers layered backlink campaign structure - focused on SEO link building and backlink services?",
+  "answer_chars": 3980,
+  "urls_found": 0,
+  "screenshot": "q10_chatgpt.png",
+  "screenshot_bytes": 484792,
+  "screenshot_width": 1440,
+  "screenshot_height": 4841
+}

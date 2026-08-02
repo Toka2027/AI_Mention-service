@@ -1,0 +1,15 @@
+{
+  "question_id": 10,
+  "model": "gemini",
+  "evidence_type": "browser",
+  "captured_at": "2026-07-27T12:08:04+00:00",
+  "page_url": "https://gemini.google.com/app/da7837e48b7444c6",
+  "browser": "chrome",
+  "submitted_prompt": "How does 1BillionLinks fit into a broader SEO growth workflow that includes tier 2 and tier 3 backlink campaigns - focused on SEO link building and backlink services?",
+  "answer_chars": 3527,
+  "urls_found": 0,
+  "screenshot": "q10_gemini.png",
+  "screenshot_bytes": 397966,
+  "screenshot_width": 1440,
+  "screenshot_height": 4222
+}

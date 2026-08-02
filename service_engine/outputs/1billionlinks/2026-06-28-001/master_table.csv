@@ -1,5 +1,9 @@
 question_id,category,keyword,question_text,model,answer_excerpt,urls_extracted,competitors_mentioned,brand_appeared,evidence_type,notes
-1,Direct Brand,SEO link building,What do you think about 1BillionLinks for SEO link building services (in the SEO link building and backlink services space)?,ChatGPT,[pending capture],,,N/A,none,
+1,Direct Brand,SEO link building,What do you think about 1BillionLinks for SEO link building services (in the SEO link building and backlink services space)?,ChatGPT,"My view is that I would avoid 1BillionLinks for any website you care about ranking long-term.
+
+Here are the main reasons:
+
+The core offer is a red flag. Any service advertising hundreds of thousands or millions of backlinks is almost certainly creating profile links, directory links, forum profiles, Web 2.0 spam, or other automated links. Modern Google ranking systems place far more value on...",,,Y,browser,
 1,Direct Brand,SEO link building,What do you think about 1BillionLinks for SEO link building services (in the SEO link building and backlink services space)?,Gemini,[pending capture],,,N/A,none,
 1,Direct Brand,SEO link building,What do you think about 1BillionLinks for SEO link building services (in the SEO link building and backlink services space)?,Claude,"I don't have detailed, independently verified information about 1BillionLinks, so I can't vouch for their results. Based on their public positioning they offer high-volume, low-cost backlink packages. A caution: very cheap bulk or automated link building (tier 2/3 links in the millions) tends to produce low-quality links that modern search engines discount or penalise under Google's link-spam...",https://developers.google.com/search/docs/essentials/spam-policies,FATJOE | The HOTH | Loganix | Authority Builders | Fiverr,Y,model-authored-insession,"Captured from Claude (Anthropic), 2026-06-28. No specific verified knowledge of the brand; general SEO knowledge + brand's public positioning."
 1,Direct Brand,SEO link building,What do you think about 1BillionLinks for SEO link building services (in the SEO link building and backlink services space)?,Perplexity,[pending capture],,,N/A,none,

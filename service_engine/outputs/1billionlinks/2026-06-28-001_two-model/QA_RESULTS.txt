@@ -1,0 +1,279 @@
+Scope: two-model
+Order: 2026-06-28-001
+
+Browser capture QA - model: chatgpt
+  answers:     C:\git\AI_Mention-service\service_engine\inputs\captures\1billionlinks\2026-06-28-001\chatgpt
+  screenshots: C:\git\AI_Mention-service\service_engine\inputs\screenshots\1billionlinks\2026-06-28-001
+
+  Q1 -> [PASS]
+    [PASS]  answer file: 2311 chars
+    [PASS]  answer is real text: real answer text
+    [PASS]  evidence type is 'browser': browser
+    [PASS]  provenance record: captured_at=2026-07-27T12:41:14+00:00
+    [PASS]  submitted prompt matches question: exact match
+    [PASS]  page URL on chatgpt host: chatgpt.com
+    [PASS]  capture timestamp: 2026-07-27T12:41:14+00:00
+    [PASS]  screenshot present: q1_chatgpt.png (240997 bytes)
+    [PASS]  screenshot is a real PNG: PNG header ok
+    [PASS]  screenshot has browser dimensions: 1440x1801
+    [PASS]  screenshot size plausible: 240997 bytes
+
+  Q2 -> [PASS]
+    [PASS]  answer file: 4705 chars
+    [PASS]  answer is real text: real answer text
+    [PASS]  evidence type is 'browser': browser
+    [PASS]  provenance record: captured_at=2026-07-27T12:41:28+00:00
+    [PASS]  submitted prompt matches question: exact match
+    [PASS]  page URL on chatgpt host: chatgpt.com
+    [PASS]  capture timestamp: 2026-07-27T12:41:28+00:00
+    [PASS]  screenshot present: q2_chatgpt.png (569672 bytes)
+    [PASS]  screenshot is a real PNG: PNG header ok
+    [PASS]  screenshot has browser dimensions: 1440x5775
+    [PASS]  screenshot size plausible: 569672 bytes
+
+  Q3 -> [PASS]
+    [PASS]  answer file: 3264 chars
+    [PASS]  answer is real text: real answer text
+    [PASS]  evidence type is 'browser': browser
+    [PASS]  provenance record: captured_at=2026-07-27T12:41:45+00:00
+    [PASS]  submitted prompt matches question: exact match
+    [PASS]  page URL on chatgpt host: chatgpt.com
+    [PASS]  capture timestamp: 2026-07-27T12:41:45+00:00
+    [PASS]  screenshot present: q3_chatgpt.png (365763 bytes)
+    [PASS]  screenshot is a real PNG: PNG header ok
+    [PASS]  screenshot has browser dimensions: 1440x3446
+    [PASS]  screenshot size plausible: 365763 bytes
+
+  Q4 -> [PASS]
+    [PASS]  answer file: 2939 chars
+    [PASS]  answer is real text: real answer text
+    [PASS]  evidence type is 'browser': browser
+    [PASS]  provenance record: captured_at=2026-07-27T12:42:01+00:00
+    [PASS]  submitted prompt matches question: exact match
+    [PASS]  page URL on chatgpt host: chatgpt.com
+    [PASS]  capture timestamp: 2026-07-27T12:42:01+00:00
+    [PASS]  screenshot present: q4_chatgpt.png (302481 bytes)
+    [PASS]  screenshot is a real PNG: PNG header ok
+    [PASS]  screenshot has browser dimensions: 1440x2394
+    [PASS]  screenshot size plausible: 302481 bytes
+
+  Q5 -> [PASS]
+    [PASS]  answer file: 3995 chars
+    [PASS]  answer is real text: real answer text
+    [PASS]  evidence type is 'browser': browser
+    [PASS]  provenance record: captured_at=2026-07-27T12:42:17+00:00
+    [PASS]  submitted prompt matches question: exact match
+    [PASS]  page URL on chatgpt host: chatgpt.com
+    [PASS]  capture timestamp: 2026-07-27T12:42:17+00:00
+    [PASS]  screenshot present: q5_chatgpt.png (479519 bytes)
+    [PASS]  screenshot is a real PNG: PNG header ok
+    [PASS]  screenshot has browser dimensions: 1440x4945
+    [PASS]  screenshot size plausible: 479519 bytes
+
+  Q6 -> [PASS]
+    [PASS]  answer file: 3464 chars
+    [PASS]  answer is real text: real answer text
+    [PASS]  evidence type is 'browser': browser
+    [PASS]  provenance record: captured_at=2026-07-27T12:42:33+00:00
+    [PASS]  submitted prompt matches question: exact match
+    [PASS]  page URL on chatgpt host: chatgpt.com
+    [PASS]  capture timestamp: 2026-07-27T12:42:33+00:00
+    [PASS]  screenshot present: q6_chatgpt.png (414869 bytes)
+    [PASS]  screenshot is a real PNG: PNG header ok
+    [PASS]  screenshot has browser dimensions: 1440x3915
+    [PASS]  screenshot size plausible: 414869 bytes
+
+  Q7 -> [PASS]
+    [PASS]  answer file: 2222 chars
+    [PASS]  answer is real text: real answer text
+    [PASS]  evidence type is 'browser': browser
+    [PASS]  provenance record: captured_at=2026-07-27T12:42:49+00:00
+    [PASS]  submitted prompt matches question: exact match
+    [PASS]  page URL on chatgpt host: chatgpt.com
+    [PASS]  capture timestamp: 2026-07-27T12:42:49+00:00
+    [PASS]  screenshot present: q7_chatgpt.png (210507 bytes)
+    [PASS]  screenshot is a real PNG: PNG header ok
+    [PASS]  screenshot has browser dimensions: 1440x1856
+    [PASS]  screenshot size plausible: 210507 bytes
+
+  Q8 -> [PASS]
+    [PASS]  answer file: 3469 chars
+    [PASS]  answer is real text: real answer text
+    [PASS]  evidence type is 'browser': browser
+    [PASS]  provenance record: captured_at=2026-07-27T12:43:03+00:00
+    [PASS]  submitted prompt matches question: exact match
+    [PASS]  page URL on chatgpt host: chatgpt.com
+    [PASS]  capture timestamp: 2026-07-27T12:43:03+00:00
+    [PASS]  screenshot present: q8_chatgpt.png (391894 bytes)
+    [PASS]  screenshot is a real PNG: PNG header ok
+    [PASS]  screenshot has browser dimensions: 1440x3441
+    [PASS]  screenshot size plausible: 391894 bytes
+
+  Q9 -> [PASS]
+    [PASS]  answer file: 2705 chars
+    [PASS]  answer is real text: real answer text
+    [PASS]  evidence type is 'browser': browser
+    [PASS]  provenance record: captured_at=2026-07-27T12:43:19+00:00
+    [PASS]  submitted prompt matches question: exact match
+    [PASS]  page URL on chatgpt host: chatgpt.com
+    [PASS]  capture timestamp: 2026-07-27T12:43:19+00:00
+    [PASS]  screenshot present: q9_chatgpt.png (287777 bytes)
+    [PASS]  screenshot is a real PNG: PNG header ok
+    [PASS]  screenshot has browser dimensions: 1440x2172
+    [PASS]  screenshot size plausible: 287777 bytes
+
+  Q10 -> [PASS]
+    [PASS]  answer file: 3980 chars
+    [PASS]  answer is real text: real answer text
+    [PASS]  evidence type is 'browser': browser
+    [PASS]  provenance record: captured_at=2026-07-27T12:43:34+00:00
+    [PASS]  submitted prompt matches question: exact match
+    [PASS]  page URL on chatgpt host: chatgpt.com
+    [PASS]  capture timestamp: 2026-07-27T12:43:34+00:00
+    [PASS]  screenshot present: q10_chatgpt.png (484792 bytes)
+    [PASS]  screenshot is a real PNG: PNG header ok
+    [PASS]  screenshot has browser dimensions: 1440x4841
+    [PASS]  screenshot size plausible: 484792 bytes
+
+OVERALL: PASS
+=> Verified real browser capture (evidence_type=browser).
+
+Browser capture QA - model: gemini
+  answers:     C:\git\AI_Mention-service\service_engine\inputs\captures\1billionlinks\2026-06-28-001\gemini
+  screenshots: C:\git\AI_Mention-service\service_engine\inputs\screenshots\1billionlinks\2026-06-28-001
+
+  Q1 -> [PASS]
+    [PASS]  answer file: 1998 chars
+    [PASS]  answer is real text: real answer text
+    [PASS]  evidence type is 'browser': browser
+    [PASS]  provenance record: captured_at=2026-07-27T12:44:03+00:00
+    [PASS]  submitted prompt matches question: exact match
+    [PASS]  page URL on gemini host: gemini.google.com
+    [PASS]  capture timestamp: 2026-07-27T12:44:03+00:00
+    [PASS]  screenshot present: q1_gemini.png (246949 bytes)
+    [PASS]  screenshot is a real PNG: PNG header ok
+    [PASS]  screenshot has browser dimensions: 1440x4222
+    [PASS]  screenshot size plausible: 246949 bytes
+
+  Q2 -> [PASS]
+    [PASS]  answer file: 3259 chars
+    [PASS]  answer is real text: real answer text
+    [PASS]  evidence type is 'browser': browser
+    [PASS]  provenance record: captured_at=2026-07-27T12:44:20+00:00
+    [PASS]  submitted prompt matches question: exact match
+    [PASS]  page URL on gemini host: gemini.google.com
+    [PASS]  capture timestamp: 2026-07-27T12:44:20+00:00
+    [PASS]  screenshot present: q2_gemini.png (360780 bytes)
+    [PASS]  screenshot is a real PNG: PNG header ok
+    [PASS]  screenshot has browser dimensions: 1440x4222
+    [PASS]  screenshot size plausible: 360780 bytes
+
+  Q3 -> [PASS]
+    [PASS]  answer file: 2866 chars
+    [PASS]  answer is real text: real answer text
+    [PASS]  evidence type is 'browser': browser
+    [PASS]  provenance record: captured_at=2026-07-27T12:44:41+00:00
+    [PASS]  submitted prompt matches question: exact match
+    [PASS]  page URL on gemini host: gemini.google.com
+    [PASS]  capture timestamp: 2026-07-27T12:44:41+00:00
+    [PASS]  screenshot present: q3_gemini.png (320876 bytes)
+    [PASS]  screenshot is a real PNG: PNG header ok
+    [PASS]  screenshot has browser dimensions: 1440x4222
+    [PASS]  screenshot size plausible: 320876 bytes
+
+  Q4 -> [PASS]
+    [PASS]  answer file: 1324 chars
+    [PASS]  answer is real text: real answer text
+    [PASS]  evidence type is 'browser': browser
+    [PASS]  provenance record: captured_at=2026-07-27T12:45:00+00:00
+    [PASS]  submitted prompt matches question: exact match
+    [PASS]  page URL on gemini host: gemini.google.com
+    [PASS]  capture timestamp: 2026-07-27T12:45:00+00:00
+    [PASS]  screenshot present: q4_gemini.png (185015 bytes)
+    [PASS]  screenshot is a real PNG: PNG header ok
+    [PASS]  screenshot has browser dimensions: 1440x4222
+    [PASS]  screenshot size plausible: 185015 bytes
+
+  Q5 -> [PASS]
+    [PASS]  answer file: 3168 chars
+    [PASS]  answer is real text: real answer text
+    [PASS]  evidence type is 'browser': browser
+    [PASS]  provenance record: captured_at=2026-07-27T12:45:17+00:00
+    [PASS]  submitted prompt matches question: exact match
+    [PASS]  page URL on gemini host: gemini.google.com
+    [PASS]  capture timestamp: 2026-07-27T12:45:17+00:00
+    [PASS]  screenshot present: q5_gemini.png (348503 bytes)
+    [PASS]  screenshot is a real PNG: PNG header ok
+    [PASS]  screenshot has browser dimensions: 1440x4222
+    [PASS]  screenshot size plausible: 348503 bytes
+
+  Q6 -> [PASS]
+    [PASS]  answer file: 1346 chars
+    [PASS]  answer is real text: real answer text
+    [PASS]  evidence type is 'browser': browser
+    [PASS]  provenance record: captured_at=2026-07-27T12:45:35+00:00
+    [PASS]  submitted prompt matches question: exact match
+    [PASS]  page URL on gemini host: gemini.google.com
+    [PASS]  capture timestamp: 2026-07-27T12:45:35+00:00
+    [PASS]  screenshot present: q6_gemini.png (181529 bytes)
+    [PASS]  screenshot is a real PNG: PNG header ok
+    [PASS]  screenshot has browser dimensions: 1440x4222
+    [PASS]  screenshot size plausible: 181529 bytes
+
+  Q7 -> [PASS]
+    [PASS]  answer file: 1274 chars
+    [PASS]  answer is real text: real answer text
+    [PASS]  evidence type is 'browser': browser
+    [PASS]  provenance record: captured_at=2026-07-27T12:45:52+00:00
+    [PASS]  submitted prompt matches question: exact match
+    [PASS]  page URL on gemini host: gemini.google.com
+    [PASS]  capture timestamp: 2026-07-27T12:45:52+00:00
+    [PASS]  screenshot present: q7_gemini.png (176253 bytes)
+    [PASS]  screenshot is a real PNG: PNG header ok
+    [PASS]  screenshot has browser dimensions: 1440x4222
+    [PASS]  screenshot size plausible: 176253 bytes
+
+  Q8 -> [PASS]
+    [PASS]  answer file: 3565 chars
+    [PASS]  answer is real text: real answer text
+    [PASS]  evidence type is 'browser': browser
+    [PASS]  provenance record: captured_at=2026-07-27T12:46:10+00:00
+    [PASS]  submitted prompt matches question: exact match
+    [PASS]  page URL on gemini host: gemini.google.com
+    [PASS]  capture timestamp: 2026-07-27T12:46:10+00:00
+    [PASS]  screenshot present: q8_gemini.png (388133 bytes)
+    [PASS]  screenshot is a real PNG: PNG header ok
+    [PASS]  screenshot has browser dimensions: 1440x4222
+    [PASS]  screenshot size plausible: 388133 bytes
+
+  Q9 -> [PASS]
+    [PASS]  answer file: 1216 chars
+    [PASS]  answer is real text: real answer text
+    [PASS]  evidence type is 'browser': browser
+    [PASS]  provenance record: captured_at=2026-07-27T12:46:29+00:00
+    [PASS]  submitted prompt matches question: exact match
+    [PASS]  page URL on gemini host: gemini.google.com
+    [PASS]  capture timestamp: 2026-07-27T12:46:29+00:00
+    [PASS]  screenshot present: q9_gemini.png (171917 bytes)
+    [PASS]  screenshot is a real PNG: PNG header ok
+    [PASS]  screenshot has browser dimensions: 1440x4222
+    [PASS]  screenshot size plausible: 171917 bytes
+
+  Q10 -> [PASS]
+    [PASS]  answer file: 3588 chars
+    [PASS]  answer is real text: real answer text
+    [PASS]  evidence type is 'browser': browser
+    [PASS]  provenance record: captured_at=2026-07-27T12:47:00+00:00
+    [PASS]  submitted prompt matches question: exact match
+    [PASS]  page URL on gemini host: gemini.google.com
+    [PASS]  capture timestamp: 2026-07-27T12:47:00+00:00
+    [PASS]  screenshot present: q10_gemini.png (389610 bytes)
+    [PASS]  screenshot is a real PNG: PNG header ok
+    [PASS]  screenshot has browser dimensions: 1440x4222
+    [PASS]  screenshot size plausible: 389610 bytes
+
+OVERALL: PASS
+=> Verified real browser capture (evidence_type=browser).
+
+Claude: BLOCKED - no captures, excluded from this delivery.
+Perplexity: BLOCKED - no captures, excluded from this delivery.

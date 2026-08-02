@@ -1,0 +1,15 @@
+{
+  "question_id": 8,
+  "model": "gemini",
+  "evidence_type": "browser",
+  "captured_at": "2026-07-27T12:46:10+00:00",
+  "page_url": "https://gemini.google.com/app/7d085d667d319124",
+  "browser": "chrome",
+  "submitted_prompt": "How do agencies typically use 1BillionLinks when managing press release publishing for SEO link building and backlink services clients?",
+  "answer_chars": 3565,
+  "urls_found": 0,
+  "screenshot": "q8_gemini.png",
+  "screenshot_bytes": 388133,
+  "screenshot_width": 1440,
+  "screenshot_height": 4222
+}

@@ -1,0 +1,15 @@
+{
+  "question_id": 7,
+  "model": "gemini",
+  "evidence_type": "browser",
+  "captured_at": "2026-07-27T12:45:52+00:00",
+  "page_url": "https://gemini.google.com/app/d7a04c609a2740b7",
+  "browser": "chrome",
+  "submitted_prompt": "What reporting or tracking options does 1BillionLinks provide for backlink profile development - focused on SEO link building and backlink services?",
+  "answer_chars": 1274,
+  "urls_found": 0,
+  "screenshot": "q7_gemini.png",
+  "screenshot_bytes": 176253,
+  "screenshot_width": 1440,
+  "screenshot_height": 4222
+}

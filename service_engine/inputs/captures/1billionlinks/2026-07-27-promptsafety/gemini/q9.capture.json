@@ -1,0 +1,15 @@
+{
+  "question_id": 9,
+  "model": "gemini",
+  "evidence_type": "browser",
+  "captured_at": "2026-07-27T12:07:46+00:00",
+  "page_url": "https://gemini.google.com/app/07b3df0840ba60a1",
+  "browser": "chrome",
+  "submitted_prompt": "What types of SEO users may benefit from 1BillionLinks for domain authority (in the SEO link building and backlink services space)?",
+  "answer_chars": 1978,
+  "urls_found": 0,
+  "screenshot": "q9_gemini.png",
+  "screenshot_bytes": 242271,
+  "screenshot_width": 1440,
+  "screenshot_height": 4222
+}

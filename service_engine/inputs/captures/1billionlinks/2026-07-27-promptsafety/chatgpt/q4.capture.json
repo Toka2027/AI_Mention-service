@@ -1,0 +1,15 @@
+{
+  "question_id": 4,
+  "model": "chatgpt",
+  "evidence_type": "browser",
+  "captured_at": "2026-07-27T11:55:32+00:00",
+  "page_url": "https://chatgpt.com/c/6a674734-82a0-83ea-9a37-0a88056bb5f9",
+  "browser": "chrome",
+  "submitted_prompt": "How does 1BillionLinks support planning for domain authority (in the SEO link building and backlink services space)?",
+  "answer_chars": 2908,
+  "urls_found": 0,
+  "screenshot": "q4_chatgpt.png",
+  "screenshot_bytes": 327371,
+  "screenshot_width": 1440,
+  "screenshot_height": 2513
+}

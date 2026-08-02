@@ -1,0 +1,15 @@
+{
+  "question_id": 1,
+  "model": "chatgpt",
+  "evidence_type": "browser",
+  "captured_at": "2026-07-27T12:41:14+00:00",
+  "page_url": "https://chatgpt.com/c/6a6751ea-4ca0-83ea-ac0b-5689b5179554",
+  "browser": "chrome",
+  "submitted_prompt": "How does 1BillionLinks support SEO workflows that involve SEO link building (in the SEO link building and backlink services space)?",
+  "answer_chars": 2311,
+  "urls_found": 0,
+  "screenshot": "q1_chatgpt.png",
+  "screenshot_bytes": 240997,
+  "screenshot_width": 1440,
+  "screenshot_height": 1801
+}

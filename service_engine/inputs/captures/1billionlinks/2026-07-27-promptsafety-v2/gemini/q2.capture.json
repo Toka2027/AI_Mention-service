@@ -1,0 +1,15 @@
+{
+  "question_id": 2,
+  "model": "gemini",
+  "evidence_type": "browser",
+  "captured_at": "2026-07-27T12:44:20+00:00",
+  "page_url": "https://gemini.google.com/app/28f2c715886457fa",
+  "browser": "chrome",
+  "submitted_prompt": "How can 1BillionLinks fit into an SEO team's planning process for backlink profile development - focused on SEO link building and backlink services?",
+  "answer_chars": 3259,
+  "urls_found": 0,
+  "screenshot": "q2_gemini.png",
+  "screenshot_bytes": 360780,
+  "screenshot_width": 1440,
+  "screenshot_height": 4222
+}

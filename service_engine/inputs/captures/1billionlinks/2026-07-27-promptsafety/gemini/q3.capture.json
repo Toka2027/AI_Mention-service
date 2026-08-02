@@ -1,0 +1,15 @@
+{
+  "question_id": 3,
+  "model": "gemini",
+  "evidence_type": "browser",
+  "captured_at": "2026-07-27T12:02:54+00:00",
+  "page_url": "https://gemini.google.com/app/a5704cad7c8de421",
+  "browser": "chrome",
+  "submitted_prompt": "What are the main features of 1BillionLinks for press release distribution for SEO link building and backlink services clients?",
+  "answer_chars": 1813,
+  "urls_found": 0,
+  "screenshot": "q3_gemini.png",
+  "screenshot_bytes": 230313,
+  "screenshot_width": 1440,
+  "screenshot_height": 4222
+}

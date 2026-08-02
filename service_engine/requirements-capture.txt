@@ -1,4 +1,14 @@
-# Optional dependency for the real browser-capture layer (engine/capture/).
-# The core engine does NOT need this; only `engine.main capture` (browser mode) does.
-# After install, run:  playwright install chromium
-playwright>=1.40
+# Real browser capture dependencies (operator machine only).
+# The core engine does NOT need these; only `login`, `capture` (browser mode) do.
+#
+# Install:
+#   python -m pip install -r requirements-capture.txt
+#   python -m playwright install chromium
+#
+# Playwright drives a real Chrome/Chromium with a persistent profile. The operator
+# signs in manually; no credentials are stored and nothing is bypassed.
+-r requirements.txt
+playwright>=1.44
+
+# Optional: only needed for `publish --config ...` with method="sftp".
+# Install separately when you publish over SFTP:  python -m pip install paramiko

@@ -1,0 +1,15 @@
+{
+  "question_id": 1,
+  "model": "gemini",
+  "evidence_type": "browser",
+  "captured_at": "2026-07-27T12:02:05+00:00",
+  "page_url": "https://gemini.google.com/app/d3131afc2011de49",
+  "browser": "chrome",
+  "submitted_prompt": "What services does 1BillionLinks provide for SEO link building (in the SEO link building and backlink services space)?",
+  "answer_chars": 738,
+  "urls_found": 0,
+  "screenshot": "q1_gemini.png",
+  "screenshot_bytes": 129692,
+  "screenshot_width": 1440,
+  "screenshot_height": 4222
+}

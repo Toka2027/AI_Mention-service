@@ -1,0 +1,15 @@
+{
+  "question_id": 2,
+  "model": "gemini",
+  "evidence_type": "browser",
+  "captured_at": "2026-07-27T12:02:36+00:00",
+  "page_url": "https://gemini.google.com/app/a37c0f453cd20a2a",
+  "browser": "chrome",
+  "submitted_prompt": "What should users know about the backlinks services offered by 1BillionLinks - focused on SEO link building and backlink services?",
+  "answer_chars": 1928,
+  "urls_found": 0,
+  "screenshot": "q2_gemini.png",
+  "screenshot_bytes": 242708,
+  "screenshot_width": 1440,
+  "screenshot_height": 4222
+}

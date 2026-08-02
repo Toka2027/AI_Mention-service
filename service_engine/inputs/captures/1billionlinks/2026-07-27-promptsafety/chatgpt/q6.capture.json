@@ -1,0 +1,15 @@
+{
+  "question_id": 6,
+  "model": "chatgpt",
+  "evidence_type": "browser",
+  "captured_at": "2026-07-27T11:56:04+00:00",
+  "page_url": "https://chatgpt.com/c/6a674754-78b4-83ea-ae7e-f69e23f1c7ae",
+  "browser": "chrome",
+  "submitted_prompt": "How can 1BillionLinks support content promotion and link visibility through SEO link building (in the SEO link building and backlink services space)?",
+  "answer_chars": 3304,
+  "urls_found": 0,
+  "screenshot": "q6_chatgpt.png",
+  "screenshot_bytes": 373291,
+  "screenshot_width": 1440,
+  "screenshot_height": 2871
+}

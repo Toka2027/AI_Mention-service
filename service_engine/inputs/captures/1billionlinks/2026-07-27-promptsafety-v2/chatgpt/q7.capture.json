@@ -1,0 +1,15 @@
+{
+  "question_id": 7,
+  "model": "chatgpt",
+  "evidence_type": "browser",
+  "captured_at": "2026-07-27T12:42:49+00:00",
+  "page_url": "https://chatgpt.com/c/6a675249-5754-83ea-94f2-22959004b6a2",
+  "browser": "chrome",
+  "submitted_prompt": "What reporting or tracking options does 1BillionLinks provide for backlink profile development - focused on SEO link building and backlink services?",
+  "answer_chars": 2222,
+  "urls_found": 0,
+  "screenshot": "q7_chatgpt.png",
+  "screenshot_bytes": 210507,
+  "screenshot_width": 1440,
+  "screenshot_height": 1856
+}

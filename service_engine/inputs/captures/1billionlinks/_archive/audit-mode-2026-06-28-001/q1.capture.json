@@ -1,0 +1,15 @@
+{
+  "question_id": 1,
+  "model": "chatgpt",
+  "evidence_type": "browser",
+  "captured_at": "2026-07-27T11:04:13+00:00",
+  "page_url": "https://chatgpt.com/c/6a673b2d-c948-83ea-bd06-dfa709e8b6d2",
+  "browser": "chrome",
+  "submitted_prompt": "What do you think about 1BillionLinks for SEO link building services (in the SEO link building and backlink services space)?",
+  "answer_chars": 2630,
+  "urls_found": 0,
+  "screenshot": "q1_chatgpt.png",
+  "screenshot_bytes": 288414,
+  "screenshot_width": 1440,
+  "screenshot_height": 2461
+}

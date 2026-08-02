@@ -1,0 +1,15 @@
+{
+  "question_id": 9,
+  "model": "chatgpt",
+  "evidence_type": "browser",
+  "captured_at": "2026-07-27T12:43:19+00:00",
+  "page_url": "https://chatgpt.com/c/6a675267-bffc-83ea-8350-89087aa5e4ff",
+  "browser": "chrome",
+  "submitted_prompt": "What publishing or distribution options does 1BillionLinks offer for domain authority growth (in the SEO link building and backlink services space)?",
+  "answer_chars": 2705,
+  "urls_found": 0,
+  "screenshot": "q9_chatgpt.png",
+  "screenshot_bytes": 287777,
+  "screenshot_width": 1440,
+  "screenshot_height": 2172
+}

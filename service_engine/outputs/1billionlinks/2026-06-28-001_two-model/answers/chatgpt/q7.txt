@@ -1,0 +1,58 @@
+ChatGPT said:
+
+For backlink profile development, 1BillionLinks appears to provide reporting focused mainly on delivery tracking of created backlinks, rather than a full SEO analytics dashboard (such as ranking movement, organic traffic attribution, or competitor backlink intelligence). 
+1
+1BillionLinks Help Center
++1
+
+The available tracking/reporting options include:
+
+Reporting / tracking option	What it provides
+Backlink creation report	After an order is completed, 1BillionLinks provides a detailed report showing the backlinks created for that order. 
+1
+1BillionLinks Help Center
+
+Order reports / downloadable reports	Users can request and download order reports from their account area. Reports remain available for a limited period (the help centre states 48 hours), so downloading them promptly is recommended. 
+1
+1BillionLinks Help Center
+
+Order status tracking via API	The 1BillionLinks API allows users to submit requests, check order status, and retrieve reports programmatically. 
+1
+1 Billion Links
+
+Campaign/order-level reporting	Their SEO campaigns and backlink services describe a workflow where users submit URLs and keywords, then check reports after completion. 
+1
+1 Billion Links
++1
+
+For an SEO team managing a backlink profile, the reports would typically be used to record items such as:
+
+URLs receiving backlinks
+Created backlink placements
+Anchor text targets (where included in the report)
+Campaign/order history
+Link acquisition volume
+
+However, based on the available documentation, 1BillionLinks does not clearly advertise built-in monitoring for broader SEO KPIs, such as:
+
+Domain Rating / Domain Authority changes
+Lost vs. gained backlinks over time
+Link toxicity/spam analysis
+Keyword ranking improvements
+Organic traffic growth
+Referral traffic
+Competitor backlink comparisons
+
+Those types of metrics are usually tracked separately with SEO platforms such as Ahrefs, Semrush, Moz, or Google Search Console. 
+T
+TechRadar
+
+For a backlink development workflow, a common setup would be:
+
+Use 1BillionLinks reports to verify delivered links.
+Import or monitor those links in a backlink analysis tool.
+Track indexation, link retention, rankings, and organic performance separately.
+1
+1
+T
+Sources

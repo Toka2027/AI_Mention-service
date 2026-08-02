@@ -13,7 +13,7 @@
     "report_date": "2026-06-28"
   },
   "client_output": "2026-06-28-001",
-  "file_count": 51,
+  "file_count": 52,
   "files": [
     {
       "path": "competitor_frequency.csv",
@@ -21,7 +21,7 @@
     },
     {
       "path": "master_table.csv",
-      "bytes": 34357
+      "bytes": 34740
     },
     {
       "path": "order_brief.md",
@@ -61,7 +61,7 @@
     },
     {
       "path": "pages/1billionlinks-seo-link-building-q1.html",
-      "bytes": 5022
+      "bytes": 5024
     },
     {
       "path": "pages/1billionlinks-seo-link-building-q10.html",
@@ -89,7 +89,7 @@
     },
     {
       "path": "report.pdf",
-      "bytes": 4543
+      "bytes": 4556
     },
     {
       "path": "responses_template.csv",
@@ -97,7 +97,7 @@
     },
     {
       "path": "screenshots/EXPECTED_FILES.txt",
-      "bytes": 14398
+      "bytes": 14260
     },
     {
       "path": "screenshots/q10_claude.png",
@@ -138,6 +138,10 @@
     {
       "path": "screenshots/q19_claude.png",
       "bytes": 39251
+    },
+    {
+      "path": "screenshots/q1_chatgpt.png",
+      "bytes": 288414
     },
     {
       "path": "screenshots/q1_claude.png",

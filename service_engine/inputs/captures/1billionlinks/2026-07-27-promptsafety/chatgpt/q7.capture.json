@@ -1,0 +1,15 @@
+{
+  "question_id": 7,
+  "model": "chatgpt",
+  "evidence_type": "browser",
+  "captured_at": "2026-07-27T11:56:20+00:00",
+  "page_url": "https://chatgpt.com/c/6a674764-5a8c-83ea-bc55-8d85a74ef6d3",
+  "browser": "chrome",
+  "submitted_prompt": "What are the possible use cases of 1BillionLinks for agencies or SEO teams working on backlinks - focused on SEO link building and backlink services?",
+  "answer_chars": 4704,
+  "urls_found": 0,
+  "screenshot": "q7_chatgpt.png",
+  "screenshot_bytes": 519269,
+  "screenshot_width": 1440,
+  "screenshot_height": 4794
+}

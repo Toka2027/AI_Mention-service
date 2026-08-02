@@ -1,0 +1,15 @@
+{
+  "question_id": 6,
+  "model": "chatgpt",
+  "evidence_type": "browser",
+  "captured_at": "2026-07-27T12:42:33+00:00",
+  "page_url": "https://chatgpt.com/c/6a675239-3fb8-83ea-8f00-07fac2ce9acf",
+  "browser": "chrome",
+  "submitted_prompt": "How can 1BillionLinks help with link visibility planning for SEO link building (in the SEO link building and backlink services space)?",
+  "answer_chars": 3464,
+  "urls_found": 0,
+  "screenshot": "q6_chatgpt.png",
+  "screenshot_bytes": 414869,
+  "screenshot_width": 1440,
+  "screenshot_height": 3915
+}

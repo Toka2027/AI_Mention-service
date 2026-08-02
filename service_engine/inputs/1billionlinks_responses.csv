@@ -1,5 +1,69 @@
 question_id,question_text,model,answer,urls,competitors,screenshot_filename,behavior_notes,evidence_type
-1,What do you think about 1BillionLinks for SEO link building services (in the SEO link building and backlink services space)?,ChatGPT,[pending capture],,,q1_chatgpt.png,,
+1,What do you think about 1BillionLinks for SEO link building services (in the SEO link building and backlink services space)?,ChatGPT,"My view is that I would avoid 1BillionLinks for any website you care about ranking long-term.
+
+Here are the main reasons:
+
+The core offer is a red flag. Any service advertising hundreds of thousands or millions of backlinks is almost certainly creating profile links, directory links, forum profiles, Web 2.0 spam, or other automated links. Modern Google ranking systems place far more value on relevance, editorial placement, and authority than raw link quantity.
+Independent customer feedback is poor. Trustpilot currently shows a low overall rating, with numerous reviewers alleging missing links, disappearing links, non-indexed backlinks, or links placed on low-quality sites. While individual reviews should always be treated cautiously, the overall pattern isn't encouraging. 
+T
+Trustpilot
++1
+The price itself is a clue. Quality editorial backlinks require outreach, content creation, and publisher relationships. Those activities are expensive. A service selling massive numbers of links for a few pounds or dollars simply cannot be providing that type of link.
+Could it ever be useful?
+
+Possibly—but only in very limited circumstances.
+
+Some SEOs still experiment with huge volumes of low-quality links for:
+
+parasite SEO
+churn-and-burn affiliate sites
+private test sites
+tiered link building (not directly to a money site)
+
+Even then, the value is debated, and many practitioners report little to no ranking improvement from these types of links today. 
+R
+Reddit
++1
+
+I would not point those links at:
+
+a business website
+an ecommerce store
+a SaaS company
+a local business
+a long-term content site
+any brand you're investing in
+What I'd look for instead
+
+If you're paying for link building, I'd expect the provider to offer things like:
+
+manual outreach
+niche-relevant websites
+real traffic (not just high DA/DR)
+editorially written content
+transparent site approval before placement
+permanent placements
+no promises of ""10,000+"" links
+
+One genuinely relevant editorial backlink can be worth far more than 100,000 profile links.
+
+Overall assessment
+
+If I were scoring it purely as an SEO investment:
+
+Value for serious SEO: 2/10
+Risk: High
+Likelihood of meaningful ranking improvements: Low
+Likelihood the links are low-quality or automated: High, based on the nature of the service and the reports from customers. 
+T
+Trustpilot
++1
+
+If your goal is sustainable Google rankings in 2026, I'd allocate the same budget toward a handful of genuinely relevant editorial links—or invest in digital PR, original research, or high-quality content that naturally earns links—rather than a high-volume backlink package.
+
+T
+R
+Sources",,,q1_chatgpt.png,,browser
 1,What do you think about 1BillionLinks for SEO link building services (in the SEO link building and backlink services space)?,Gemini,[pending capture],,,q1_gemini.png,,
 1,What do you think about 1BillionLinks for SEO link building services (in the SEO link building and backlink services space)?,Claude,"I don't have detailed, independently verified information about 1BillionLinks, so I can't vouch for their results. Based on their public positioning they offer high-volume, low-cost backlink packages. A caution: very cheap bulk or automated link building (tier 2/3 links in the millions) tends to produce low-quality links that modern search engines discount or penalise under Google's link-spam guidelines. For sustainable SEO, prioritise relevance and editorial quality over raw link counts, and test any provider on a small scale first.",https://developers.google.com/search/docs/essentials/spam-policies,FATJOE | The HOTH | Loganix | Authority Builders | Fiverr,q1_claude.png,"Captured from Claude (Anthropic), 2026-06-28. No specific verified knowledge of the brand; general SEO knowledge + brand's public positioning.",model-authored-insession
 1,What do you think about 1BillionLinks for SEO link building services (in the SEO link building and backlink services space)?,Perplexity,[pending capture],,,q1_perplexity.png,,

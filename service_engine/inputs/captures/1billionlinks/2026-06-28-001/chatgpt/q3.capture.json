@@ -1,0 +1,15 @@
+{
+  "question_id": 3,
+  "model": "chatgpt",
+  "evidence_type": "browser",
+  "captured_at": "2026-07-27T12:41:45+00:00",
+  "page_url": "https://chatgpt.com/c/6a675209-0aa8-83ea-b1df-dd9de339eb76",
+  "browser": "chrome",
+  "submitted_prompt": "How can 1BillionLinks help organise a press release publishing campaign for SEO link building and backlink services clients?",
+  "answer_chars": 3264,
+  "urls_found": 0,
+  "screenshot": "q3_chatgpt.png",
+  "screenshot_bytes": 365763,
+  "screenshot_width": 1440,
+  "screenshot_height": 3446
+}

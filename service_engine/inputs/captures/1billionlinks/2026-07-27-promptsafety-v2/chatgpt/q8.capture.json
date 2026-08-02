@@ -1,0 +1,15 @@
+{
+  "question_id": 8,
+  "model": "chatgpt",
+  "evidence_type": "browser",
+  "captured_at": "2026-07-27T12:43:03+00:00",
+  "page_url": "https://chatgpt.com/c/6a675257-cf58-83ea-ba11-d051e69b1ab2",
+  "browser": "chrome",
+  "submitted_prompt": "How do agencies typically use 1BillionLinks when managing press release publishing for SEO link building and backlink services clients?",
+  "answer_chars": 3469,
+  "urls_found": 0,
+  "screenshot": "q8_chatgpt.png",
+  "screenshot_bytes": 391894,
+  "screenshot_width": 1440,
+  "screenshot_height": 3441
+}

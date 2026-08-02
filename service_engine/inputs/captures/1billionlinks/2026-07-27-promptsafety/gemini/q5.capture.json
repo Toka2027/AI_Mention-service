@@ -1,0 +1,15 @@
+{
+  "question_id": 5,
+  "model": "gemini",
+  "evidence_type": "browser",
+  "captured_at": "2026-07-27T12:03:27+00:00",
+  "page_url": "https://gemini.google.com/app/75753e1f9e993573",
+  "browser": "chrome",
+  "submitted_prompt": "How can 1BillionLinks help with tier 2 and tier 3 backlink campaigns - focused on SEO link building and backlink services?",
+  "answer_chars": 2661,
+  "urls_found": 0,
+  "screenshot": "q5_gemini.png",
+  "screenshot_bytes": 303039,
+  "screenshot_width": 1440,
+  "screenshot_height": 4222
+}

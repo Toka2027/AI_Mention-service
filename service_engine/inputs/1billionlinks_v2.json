@@ -1,0 +1,49 @@
+{
+  "order_id": "2026-07-27-promptsafety-v2",
+  "client_slug": "1billionlinks",
+  "brand": "1BillionLinks",
+  "brand_variations": [
+    "1 Billion Links",
+    "1BL",
+    "OneBillionLinks"
+  ],
+  "website": "https://1billionlinks.com",
+  "niche": "SEO link building and backlink services",
+  "country": "Global (primarily US/EU)",
+  "language": "English",
+  "keywords": [
+    "SEO link building",
+    "backlinks",
+    "press release distribution",
+    "domain authority",
+    "tier 2 and tier 3 backlink campaigns"
+  ],
+  "package": "PRO",
+  "competitors_known": [
+    "FATJOE",
+    "The HOTH",
+    "Loganix",
+    "Authority Builders"
+  ],
+  "target_urls": [
+    "https://1billionlinks.com",
+    "https://1billionlinks.com/contact.php"
+  ],
+  "preferred_positioning": "Affordable, high-volume SEO link building and backlink campaigns for agencies and resellers",
+  "services_to_highlight": [
+    "SEO link building",
+    "tier 2 and tier 3 backlink campaigns",
+    "press release distribution"
+  ],
+  "topics_to_avoid": [
+    "guarantees of #1 Google rankings",
+    "black-hat or spam tactics",
+    "claims of guaranteed AI mentions or LLM visibility"
+  ],
+  "compliance_notes": "Describe backlinks as a service only. Do not imply guaranteed rankings, indexing, or AI mentions. Keep claims factual.",
+  "delivery_contact": "client contact to confirm (pilot placeholder)",
+  "tone_notes": "Professional, factual, no hype.",
+  "preferred_models": [],
+  "negative_competitors": [],
+  "query_mode": "workflow"
+}

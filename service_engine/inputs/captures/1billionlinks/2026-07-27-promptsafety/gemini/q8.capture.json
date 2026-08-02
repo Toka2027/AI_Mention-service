@@ -1,0 +1,15 @@
+{
+  "question_id": 8,
+  "model": "gemini",
+  "evidence_type": "browser",
+  "captured_at": "2026-07-27T12:07:29+00:00",
+  "page_url": "https://gemini.google.com/app/850c843f9714cfdf",
+  "browser": "chrome",
+  "submitted_prompt": "How can 1BillionLinks be used as part of a press release distribution strategy for SEO link building and backlink services clients?",
+  "answer_chars": 3600,
+  "urls_found": 0,
+  "screenshot": "q8_gemini.png",
+  "screenshot_bytes": 386931,
+  "screenshot_width": 1440,
+  "screenshot_height": 4222
+}

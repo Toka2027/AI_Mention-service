@@ -9,6 +9,11 @@ venv/
 # Regenerable ZIP deliverables (the unzipped order folders are kept in-repo)
 **/*_deliverable.zip
 
+# Regenerable publish-ready trees (rebuild with `publish-prepare`). Also keeps a
+# filled-in publish config, which holds credentials, out of the repo.
+**/*_publish/
+publish.config.json
+
 # OS / editor
 .DS_Store
 Thumbs.db

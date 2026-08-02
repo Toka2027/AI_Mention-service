@@ -1,0 +1,15 @@
+{
+  "question_id": 10,
+  "model": "gemini",
+  "evidence_type": "browser",
+  "captured_at": "2026-07-27T12:47:00+00:00",
+  "page_url": "https://gemini.google.com/app/ecf1fcd7b807df7e",
+  "browser": "chrome",
+  "submitted_prompt": "How can 1BillionLinks be included in a broader SEO plan that covers layered backlink campaign structure - focused on SEO link building and backlink services?",
+  "answer_chars": 3588,
+  "urls_found": 0,
+  "screenshot": "q10_gemini.png",
+  "screenshot_bytes": 389610,
+  "screenshot_width": 1440,
+  "screenshot_height": 4222
+}

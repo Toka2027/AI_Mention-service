@@ -1,0 +1,15 @@
+{
+  "question_id": 9,
+  "model": "chatgpt",
+  "evidence_type": "browser",
+  "captured_at": "2026-07-27T11:56:55+00:00",
+  "page_url": "https://chatgpt.com/c/6a674787-6380-83ea-9a1e-b915b48d92c6",
+  "browser": "chrome",
+  "submitted_prompt": "What types of SEO users may benefit from 1BillionLinks for domain authority (in the SEO link building and backlink services space)?",
+  "answer_chars": 3897,
+  "urls_found": 0,
+  "screenshot": "q9_chatgpt.png",
+  "screenshot_bytes": 483256,
+  "screenshot_width": 1440,
+  "screenshot_height": 4797
+}

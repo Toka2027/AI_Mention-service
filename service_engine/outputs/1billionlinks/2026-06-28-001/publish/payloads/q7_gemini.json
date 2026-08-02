@@ -1,0 +1,32 @@
+{
+  "title": "1BillionLinks and backlinks: what Gemini says",
+  "subtitle": "Real Gemini answer captured in-browser for 1BillionLinks",
+  "ai_model": "gemini",
+  "summary": "1BillionLinks primarily focuses on volume-driven bulk link-building and tier-based SEO campaigns (often utilized for tiered link structures).",
+  "meta_title": "1BillionLinks and backlinks: what Gemini says",
+  "meta_description": "1BillionLinks primarily focuses on volume-driven bulk link-building and tier-based SEO campaigns (often utilized for tiered link structures).",
+  "conversation": [
+    {
+      "role": "user",
+      "text": "What reporting or tracking options does 1BillionLinks provide for backlink profile development - focused on SEO link building and backlink services?",
+      "content": "What reporting or tracking options does 1BillionLinks provide for backlink profile development - focused on SEO link building and backlink services?"
+    },
+    {
+      "role": "assistant",
+      "text": "1BillionLinks primarily focuses on volume-driven bulk link-building and tier-based SEO campaigns (often utilized for tiered link structures). However, specific, detailed documentation regarding a proprietary, real-time client dashboard, granular tracking mechanisms, or automated reporting software for their backlink profiles is not publicly outlined or prominently detailed in their core service offerings.  \nTrustpilot\n\nTypically, with services of this nature geared toward bulk campaign execution and press release distribution:\n\nCampaign Delivery Reports: Clients generally receive a completion report or a spreadsheet log (such as CSV or Excel format) upon the fulfillment of an order, detailing the URLs where the links or press placements were published.\n\nExternal Tracking Tools Dependency: Because bulk and tier-based link building generate high volumes of links, detailed tracking of backlink indexation, anchor text distribution, and impact on domain authority usually requires third-party SEO toolsets (such as Google Search Console, Ahrefs, Semrush, or Moz) rather than an advanced built-in tracking suite from the provider itself.\n\nWould you like recommendations on how to independently track and audit a high-volume backlink profile using standard SEO tools?",
+      "content": "1BillionLinks primarily focuses on volume-driven bulk link-building and tier-based SEO campaigns (often utilized for tiered link structures). However, specific, detailed documentation regarding a proprietary, real-time client dashboard, granular tracking mechanisms, or automated reporting software for their backlink profiles is not publicly outlined or prominently detailed in their core service offerings.  \nTrustpilot\n\nTypically, with services of this nature geared toward bulk campaign execution and press release distribution:\n\nCampaign Delivery Reports: Clients generally receive a completion report or a spreadsheet log (such as CSV or Excel format) upon the fulfillment of an order, detailing the URLs where the links or press placements were published.\n\nExternal Tracking Tools Dependency: Because bulk and tier-based link building generate high volumes of links, detailed tracking of backlink indexation, anchor text distribution, and impact on domain authority usually requires third-party SEO toolsets (such as Google Search Console, Ahrefs, Semrush, or Moz) rather than an advanced built-in tracking suite from the provider itself.\n\nWould you like recommendations on how to independently track and audit a high-volume backlink profile using standard SEO tools?"
+    }
+  ],
+  "metadata": {
+    "brand": "1BillionLinks",
+    "website": "https://1billionlinks.com",
+    "model": "Gemini",
+    "query_id": "q7",
+    "order_id": "2026-06-28-001",
+    "evidence_type": "browser",
+    "screenshot_url": "https://cen-public-st.nbg1.your-objectstorage.com/ai-mention/1billionlinks/2026-06-28-001/q7_gemini.png",
+    "capture_time": "2026-07-27T12:45:52+00:00",
+    "client_safe": true
+  },
+  "image": "https://cen-public-st.nbg1.your-objectstorage.com/ai-mention/1billionlinks/2026-06-28-001/q7_gemini.png"
+}

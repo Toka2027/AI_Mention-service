@@ -1,0 +1,15 @@
+{
+  "question_id": 3,
+  "model": "chatgpt",
+  "evidence_type": "browser",
+  "captured_at": "2026-07-27T11:55:16+00:00",
+  "page_url": "https://chatgpt.com/c/6a674724-a534-83ea-9345-b18fb79ee489",
+  "browser": "chrome",
+  "submitted_prompt": "What are the main features of 1BillionLinks for press release distribution for SEO link building and backlink services clients?",
+  "answer_chars": 3112,
+  "urls_found": 0,
+  "screenshot": "q3_chatgpt.png",
+  "screenshot_bytes": 319382,
+  "screenshot_width": 1440,
+  "screenshot_height": 2338
+}

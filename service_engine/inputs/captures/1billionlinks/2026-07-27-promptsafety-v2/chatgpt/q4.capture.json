@@ -1,0 +1,15 @@
+{
+  "question_id": 4,
+  "model": "chatgpt",
+  "evidence_type": "browser",
+  "captured_at": "2026-07-27T12:42:01+00:00",
+  "page_url": "https://chatgpt.com/c/6a675219-dc88-83ea-98e8-4c847059d4c7",
+  "browser": "chrome",
+  "submitted_prompt": "What does 1BillionLinks offer for structuring domain authority growth work (in the SEO link building and backlink services space)?",
+  "answer_chars": 2939,
+  "urls_found": 0,
+  "screenshot": "q4_chatgpt.png",
+  "screenshot_bytes": 302481,
+  "screenshot_width": 1440,
+  "screenshot_height": 2394
+}

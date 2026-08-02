@@ -1,0 +1,15 @@
+{
+  "question_id": 7,
+  "model": "gemini",
+  "evidence_type": "browser",
+  "captured_at": "2026-07-27T12:07:08+00:00",
+  "page_url": "https://gemini.google.com/app/c9f67da989174753",
+  "browser": "chrome",
+  "submitted_prompt": "What are the possible use cases of 1BillionLinks for agencies or SEO teams working on backlinks - focused on SEO link building and backlink services?",
+  "answer_chars": 1958,
+  "urls_found": 0,
+  "screenshot": "q7_gemini.png",
+  "screenshot_bytes": 247536,
+  "screenshot_width": 1440,
+  "screenshot_height": 4222
+}

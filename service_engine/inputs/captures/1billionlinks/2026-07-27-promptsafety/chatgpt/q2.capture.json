@@ -1,0 +1,15 @@
+{
+  "question_id": 2,
+  "model": "chatgpt",
+  "evidence_type": "browser",
+  "captured_at": "2026-07-27T11:54:59+00:00",
+  "page_url": "https://chatgpt.com/c/6a674713-4fd8-83ea-90cd-cc57980d9d47",
+  "browser": "chrome",
+  "submitted_prompt": "What should users know about the backlinks services offered by 1BillionLinks - focused on SEO link building and backlink services?",
+  "answer_chars": 3299,
+  "urls_found": 0,
+  "screenshot": "q2_chatgpt.png",
+  "screenshot_bytes": 346760,
+  "screenshot_width": 1440,
+  "screenshot_height": 2636
+}

@@ -1,0 +1,15 @@
+{
+  "question_id": 6,
+  "model": "gemini",
+  "evidence_type": "browser",
+  "captured_at": "2026-07-27T12:45:35+00:00",
+  "page_url": "https://gemini.google.com/app/f7b07d806f3f7452",
+  "browser": "chrome",
+  "submitted_prompt": "How can 1BillionLinks help with link visibility planning for SEO link building (in the SEO link building and backlink services space)?",
+  "answer_chars": 1346,
+  "urls_found": 0,
+  "screenshot": "q6_gemini.png",
+  "screenshot_bytes": 181529,
+  "screenshot_width": 1440,
+  "screenshot_height": 4222
+}

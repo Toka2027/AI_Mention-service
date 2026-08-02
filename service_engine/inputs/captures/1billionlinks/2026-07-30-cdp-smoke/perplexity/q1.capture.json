@@ -1,0 +1,15 @@
+{
+  "question_id": 1,
+  "model": "perplexity",
+  "evidence_type": "browser",
+  "captured_at": "2026-07-30T09:25:20+00:00",
+  "page_url": "https://www.perplexity.ai/search/c278576b-d438-4025-b065-a1d000aa50d1",
+  "browser": "chrome-cdp (Chrome/150.0.7871.184)",
+  "submitted_prompt": "How does 1BillionLinks support SEO workflows that involve SEO link building (in the SEO link building and backlink services space)?",
+  "answer_chars": 1747,
+  "urls_found": 0,
+  "screenshot": "q1_perplexity.png",
+  "screenshot_bytes": 224103,
+  "screenshot_width": 1440,
+  "screenshot_height": 1605
+}

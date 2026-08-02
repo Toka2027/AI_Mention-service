@@ -1,0 +1,15 @@
+{
+  "question_id": 10,
+  "model": "chatgpt",
+  "evidence_type": "browser",
+  "captured_at": "2026-07-27T11:57:11+00:00",
+  "page_url": "https://chatgpt.com/c/6a674797-68dc-83ea-8277-cb36b2bf9292",
+  "browser": "chrome",
+  "submitted_prompt": "How does 1BillionLinks fit into a broader SEO growth workflow that includes tier 2 and tier 3 backlink campaigns - focused on SEO link building and backlink services?",
+  "answer_chars": 4579,
+  "urls_found": 0,
+  "screenshot": "q10_chatgpt.png",
+  "screenshot_bytes": 521307,
+  "screenshot_width": 1440,
+  "screenshot_height": 5993
+}
